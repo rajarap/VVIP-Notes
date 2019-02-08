@@ -1,0 +1,35 @@
+Alert alert = driver.switchTo().alert();
+alert.accept(); or alert.dismiss();
+
+driver.findElement(By.xpath(" " ).sendKeys("path and filename");
+
+========================================================
+
+to handle different browser window 
+
+1. obtain window id.  each window will have an window id.
+2. using window id, switch to the relevant window.
+3. perform  actions on that window.
+4. close the window.
+5. come back to parent window
+
+driver.switchTo().alert();
+driver.switchTo().window(windowhandle);
+driver.switchTo().frame(frame name);  
+
+Mouse over:
+========================================================
+
+Actions acts = new Actions(driver);
+acts.moveToElement(driver.findElement(By.linkText(" "))).build().perform();
+
+Actions acts = new Actions(driver);
+acts.clickAndHold(driver.findElement(By.linkText(" "))).moveToElement(driver.findElement(By.linkText(" "))).build().perform();
+
+Chrome with headless browser:
+=========================================================
+ChromeOptions options = new ChromeOptions();
+options.addArguments("window-size=1400,800");
+options.addArguments("headless");
+
+WebDriver driver = new ChromeDriver(options);

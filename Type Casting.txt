@@ -1,0 +1,23 @@
+Type Casting: (part 1 - 242)
+-------------
+
+1. Parent class reference variable can be used to hold child class object.  Eg: Parent p = new Child();
+2. Interface reference variable can be used to hold implementing class object.  Eg: Runnable r = new Thread();
+
+			A b = (C) d;
+
+A - can be a class or interface
+b - reference variable
+(C) - can be a class or interface.
+d - object reference or object.
+
+Compiler checking rules:
+-----------------------------
+1. (C) and type of 'd' must have some relationship (either parent to child or child to parent or same type). Else CE: Inconvertible types found d type required C type.
+2. (C) must be same or derived type of 'A', else CE:Incompatible types.
+
+Runtime(JVM) checking rules:
+---------------------------
+1. The underlying object of 'd' must be either same or derived type of (C). else RE: ClassCase Exception.
+
+Refer part1 - 245 for combination of examples.

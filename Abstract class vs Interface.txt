@@ -1,0 +1,35 @@
+Difference between Abstract class vs Interface:
+--------------------------------------------------
+
+				Interface																						Abstract Class
+==================================================================================================================================================================
+1. If we dont know anything about implementation and just we have specs				1. If we are talking about implementation, but not completely (partial implementation)
+then we should go for Interface.													   then we should go for Abstract class.
+
+2. Inside an interface, every method is by default, public and abstract,			2. Every method in abstrace class need not be public or abstract.  In addition to
+whether you declare it or not. Hence every interface is 100% abstract class.		   abstract methods, there can be concrete methods also.
+
+3. Interface methods cannot be declared with following modifiers:					3. Abstract methods can be used with with all modifiers. There is no restriction.
+private/protected,  static/strictfp/native/synchronized.
+
+4. Every variable declared in an interface is always public/static/final			4. The variables in abstract class need not be public/static/final.
+whether we declare them explicitly or not.	
+
+5. All interface variables have to be initialized compulsarily at the time			5. For abstract class variables, it is not required to perform initialization,
+of declaring, else CE: will be thrown.												   at the time of declaration.
+
+6. Inside interface we cannot declare instance or static blocks.					6. Inside abstract class we can declare instance or static blocks.
+
+7. Inside interface we cannot declare constructors.									7. Inside abstract class we can declare constructors which will  be executed
+																					   at the time of child object creation.
+																					   
+8. We cannot declare interface variables as private or protected as they 			8. There are no such restrictions for abstract class variables.
+are public/static/final. 
+We cannot serialize or use transient modifier as no objects can be created.
+We cannot use volatile as interface variables are final.
+
+Java 8:  There are few changes w.r.t interfaces.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. Methods in interfaces can be default and static, in addition to being public and abstract.  The reason for default methods in interfaces is to allow the 
+developers to add new methods to the interfaces without affecting the classes that implements these interfaces.

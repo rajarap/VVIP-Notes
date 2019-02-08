@@ -1,0 +1,231 @@
+Assertions in Selenium:         
+-------------------------
+
+Assertions are not part of Selenium jar.  The come as part of TestNg. In TestNg, we have the Assert class.
+
+Note: https://webkul.com/blog/assertion-in-selenium-webdriver/
+
+
+Selenium commands (Selenese) are of three types : Actions, Accessors, and Assertions. (AAA)
+
+Actions: 
+-----------
+Generally manipulate the state of the application like “click this link” and “select that option”. If an Action fails, or has an error, 
+the execution of the current test is stops.
+
+Accessors: 
+--------------
+Examine the state of the application and store the results in variables, e.g. “Title”.
+
+Assertions: 
+-------------
+Verify that the state of the application is same to what we are expecting. 
+
+Selenium Assertions can be of three types: “assert”, “verify”, and ” waitFor”. 
+When an “assert” fails, the test is aborted. 
+When a “verify” fails, the test will continue execution, logging the failure
+A “waitFor” command waits for some condition to become true. They will fail and halt the test if the condition does not become true 
+within the current timeout setting. Perhaps, they will succeed immediately if the condition is already true.
+
+
+When, we talk about the assertions used in WebDriver using TestNg framework, we have two types of assertions; hard assertion and soft assertion.
+
+Hard Assertion:
+---------------
+
+A hard assert throws AssertException immediately after a test fails and the test is marked as failed. 
+Perhaps test suite continues with next @Test annotation. A hard assertion can be of following types:
+
+assertEquals
+assertNotEquals
+assertTrue
+assertFalse
+assertNull
+assertNotNull
+
+
+* Assert.assertEquals()
+-----------------------
+This is used to compare expected and actual values in selenium webdriver. Whenever the expected and actual values are same, 
+the assertion passes with no exception. But, if the actual and expected values are not just same, the assert fails with an exception and 
+the test is marked as “failed”. The suite continues to run with the next @Test annotation(if any).
+Eg: Assert.assertEquals(actual,expected);
+
+* Assert.AssertNotEquals()
+--------------------------
+assertNotEquals is just opposite to the functioning of assertEquals assertion. Whenever the expected and actual values matches, the assertion fails with 
+an exception and marks the test-case as “failed”. The particular testcase is aborted and execution continuous with the next @Test annotation.
+Eg: Assert.assertNotEquals(actual,expected,Message);
+
+* Assert.AssertTrue()
+----------------------
+When we are dealing with Boolean conditions, we should use assertTrue. This assertion returns true if the applied condition passes. 
+If the condition is false/fails, this assertion skips the current method from execution.
+Eg: Assert.assertTrue(condition);
+
+* Assert.AssertFalse()
+-----------------------
+Assert.assertFalse checks the Boolean value returned by a condition is false or not. When a condition value is true, the assertion aborts the 
+method by an exception. This is basically opposite to assertTrue. The syntax is given below:
+Eg: Assert.assertFalse(condition);
+
+* Assert.AssertNull()
+----------------------
+This assertion checks for a object, if it is null or not. When an object is ‘null’ the assertion returns an exception resulting in aborting the test. 
+The syntax is as follows:
+Eg: Assert.assertNull(object);
+
+* Assert.AssertNotNull()
+----------------------------
+Assert.assertNotNull is vice-versa of assertNull. When a object has some value, the assertion aborts the method with an exception. The syntax is given below:
+Eg: Assert.assertNotNull(object);
+
+
+
+Soft Assertion In WebDriver Using TestNg
+------------------------------------------
+
+Till now, we have learnt about the hard assertions in WebDriver using testNg framework. In a hard assertion, when the assertion fails it terminates/aborts the 
+test(method). But, what if we want to run the entire program? What if, we want to report fail test in testNg report but do not want to terminate 
+the script at any case? It is not really possible if we use hard assertions. So, to overcome this drawback of hard assertion we can use 
+soft assertions in testNg.
+
+To use a soft assertion in testNg, we have to include it’s corresponding class (as SoftAssert()) in the script. This class prevents the execution to 
+throw any exception (of assertion). Also, the most important context is, now the failed assertions will be reported in the testNg report and not making 
+the test to abort anywhere.
+
+Points to Remember:
+-------------------
+1. Each @Test should contain different SoftAssert object, in order to obtain the failed steps specific to that @Test.
+2. If you use the same SoftAssert object for all @Test, then all the failed steps will be captured in only softassert object only.
+3. Use softassert only in places where failure of a test step not does matter much. Applicable only for low level or low priority functionalities which does 
+not have any major impact on the application. Eg: title of the page, message displayed on a alert box, wrong label name etc.
+4. Another way to implement softassert is to use hard assert within try-catch block. This is normal java coding using try-catch and manageing hard assert within
+try-catch.
+5. Dont forget to add the softAssert.assertAll() statement.  Without adding this statement, we cannot capture the failed steps.
+
+
+
+public class SoftAssertion 
+{
+	//Ways to create multiple soft assert objects using Java arrays.
+	public SoftAssert[] sassert = new SoftAssert[5];
+	public SoftAssert[] softassert = {new SoftAssert(), new SoftAssert()};
+	
+	@Test
+	public void test1()
+	{
+		System.out.println("Load app in FF browser");
+		System.out.println("Accessing url of the app");
+		System.out.println("Loggin into the application");
+		System.out.println("Enter username");
+		sassert[0] = new SoftAssert();
+		sassert[0].assertEquals(true, false);
+		Assert.assertEquals(true, false);
+		
+		System.out.println("Enter password");
+		sassert[0].assertEquals(true, false);
+		System.out.println(sassert[0].toString());
+		System.out.println(softassert[0].toString());
+		sassert[0].assertAll();
+		
+	}
+	
+	@Test
+	public void test2()
+	{
+		System.out.println("Load app in FF browser");
+		System.out.println("Accessing url of the app");
+		System.out.println("Loggin into the application");
+		System.out.println("Enter username");
+		sassert[1] = new SoftAssert();
+		sassert[1].assertEquals(true, false);
+		
+		System.out.println("Enter password");
+		sassert[1].assertEquals(true, false);
+		System.out.println(sassert[1].toString());
+		System.out.println(softassert[1].toString());
+		sassert[1].assertAll();
+	}
+}
+
+=================================================================================================================================================================
+
+Q. Ways to implement soft assert in Selenium Webdriver 3 using TestNG?
+A. 
+There are 2 ways to implement soft assertion in Selenium Webdriver 3 using TestNG.
+
+1. using try-catch block with Throwable t.
+2. using SoftAssert object.
+
+
+Eg 1:  Hard assert converted into soft assert by including it within a try-catch block
+--------------------------------------------------------------------------------------
+
+	public void bankManagerLoginTest() throws InterruptedException
+	{
+		extentTest = extent.createTest("loginAsBankManager() logs");
+		String title = driver.getTitle();
+		//Protractor practice website - Banking App
+		try
+		{
+			Assert.assertEquals(title, "Protractor practice website - XYZ App");
+		}
+		catch(Throwable e)
+		{
+			e.getMessage();
+			wait = new WebDriverWait(driver, 3, 500);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("btn_bankMgr_xpath")))).click();
+			extentTest.info("Clicked on bank manager button");
+		}
+
+		try
+		{
+			extentTest.info("Asserting if Add Customer button is displayed");
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(OR.getProperty("btn_Customers_xpath"))));
+			Assert.assertTrue(isElementPresent(By.xpath(OR.getProperty("btn_addCustomer_xpath"))));
+			extentTest.info("Assertion successfull - Add Customer button is displayed");
+		}
+		catch(Exception e)
+		{
+			extentTest.info("Assertion failed - Check exception stack trace");
+			e.printStackTrace();
+		}
+		
+Eg 2:  By using the object of the SoftAssert class and assertAll() method.
+--------------------------------------------------------------------------
+
+public class BankManagerLoginTest extends TestBase
+{	
+	SoftAssert sassert = new SoftAssert();
+	@Test
+	public void bankManagerLoginTest() throws InterruptedException
+	{
+		extentTest = extent.createTest("loginAsBankManager() logs");
+		String title = driver.getTitle();
+		//Protractor practice website - Banking App
+
+			sassert.assertEquals(title, "Protractor practice website - XYZ App");
+			wait = new WebDriverWait(driver, 3, 500);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("btn_bankMgr_xpath")))).click();
+			extentTest.info("Clicked on bank manager button");
+
+		try
+		{
+			extentTest.info("Asserting if Add Customer button is displayed");
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(OR.getProperty("btn_Customers_xpath"))));
+			Assert.assertTrue(isElementPresent(By.xpath(OR.getProperty("btn_addCustomer_xpath"))));
+			extentTest.info("Assertion successfull - Add Customer button is displayed");
+		}
+		catch(Exception e)
+		{
+			extentTest.info("Add Customer Assertion failed - Check exception stack trace");
+			e.printStackTrace();
+		}
+		
+		sassert.assertAll();
+	}
+}
+
+Eg 3: In TestNG, we use only Assert Statements. There is no method by name verify() in TestNG. Verify is implemented in terms of if-else or try-catch. 
+

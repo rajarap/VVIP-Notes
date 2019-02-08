@@ -1,0 +1,61 @@
+Load Testing Methods
+
+* for your tuning to be effective, your load should be good enough.  So look at the load first for proper tuning of app server.
+Determine the load on the server, before tuning the server. Eg. to know whether you need to put  a donkey or bull or horse or elephant, depends upon
+the load.
+
+* end user patterns and end user loads are two important factors for determine the kind of tuning required on the app server.
+
+* The more your end user patterns match your estimates, the more better.  If not, RCA should be conducted and rectify the gap which can help you in future estimates.
+
+* estimate and validate load and patterns very frequently during  the  initial stages of the application.  As the application matures, this frequency can be once in a quater or six months.
+
+* When new features are added, it would be wise to increase the frequency of estimates to see the impact of the new features on the performance of the system.  Even a single new feature can degrade the performance sharply.
+
+
+JVM heap size tuning:
+
+-Xms		: Setting the minimum size of the heap		: Eg: -Xms500m
+-Xmx		: Setting the maximum  size of the heap		: Eg: -Xmx500m
+
+-XX:SurviorRatio	: Setting the suvivor ratio			: Eg: -XX:SurvivorRatio = 6
+
+-XX:MaxNewSize	: Setting the max size of the young generation	: Eg: -XX:MaxNewSize = 450m
+-XX:NewSize	: Setting the min size of the young generation	: Eg: -XX:NewSize = 450m
+
+
+
+Garbage collection tuning:
+
+-verbose:gc
+-Xloggc:filename
+-XX:+PrintGCDetails
+-XX:+PrintGCTimeStamps
+-XX:+PrintHeapAtGC
+-XX:+PrintTernuringDistribution
+-XX:+PrintTLAB
+
+-verbose:gc
+-Xloggc:gc.log
+33.357: [GC 25394K->18238K(130176K), 0.0148471 secs]
+33.811: [Full GC 22646K->18501K(130176K), 0.1954419 secs]
+
+
+
+D:\Selenium\MavenWorkspaceProject\Emirates\src\main\resources\Configuration\Config.properties
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

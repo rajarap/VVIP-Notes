@@ -1,0 +1,27 @@
+JDK vs JRE  vs  JVM:
+-----------------------
+
+* JDK: To develop and run java application the required environment is provided by JDK.
+* JRE: To run java application the required environment is  provided by JRE.
+* JVM: Responsible to execute the java program.
+
+* JDK = JRE+tools
+* JRE = JVM+libraries.
+
+* JDK is installed on machines where we have to develop and run java based application.
+* JRE is installed on client machines where you only require a run time environment to execute the java application.  since no development happens here,
+  JDK is not required on this machine.
+  
+  
+  
+Path vs Classpath:
+-------------------
+Path:
+------
+set the 'Path' variable to specify the location where the binary executables are available. If 'path' variable is not set, then java and javac commands
+wont work.
+
+Classpath:
+----------
+set the 'Classpath' variable to specify the location where the required .class files are avialable. If 'Classpath' variable is not set, then  our programs
+wont run.

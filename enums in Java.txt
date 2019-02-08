@@ -1,0 +1,243 @@
+enums in Java: (introduced in  v1.5)
+-------------------------------------
+
+enum is a "group of constants".  Just like an array is "group of data elements", collection is "group of objects", enum is a "group of constants".
+
+Eg: 
+public enum Beer 
+{
+	KF, FO, KO, BW;
+}
+
+public enum Month 
+{
+	JAN, FEB, MAR, APR, MAY, JUN;
+}
+
+Case1: Every enum is internally implemented as a class.
+Eg:  The above enum is represented as a class internally.
+
+public class Beer
+{
+	Beer KF = new Beer();
+	Beer FO = new Beer();
+	Beer KO = new Beer();
+	Beer BW = new Beer();
+}
+
+Case2: Every enum constant is a reference variable to enum type object. Eg as above.
+
+Case3: Every enum constant is always, public static final.
+public - since it has to be accessed outside the class and package.
+static - should only be referenced with enum name.
+final - since enum  is group of constants, it has to be final.
+
+
+
+Declaration  of an enum:
+--------------------------
+public enum Beer 
+{
+	KF, FO, KO, BW;
+	
+}
+public class Beerclass 
+{
+		public static void main(String[] args)
+		{
+			Beer beerkf = Beer.KF;
+			Beer beerfo = Beer.FO;
+			Beer beerko = Beer.KO;
+			Beer beerbw = Beer.BW;
+
+			System.out.println(beerkf);
+			System.out.println(beerkf.hashCode());
+			System.out.println(beerkf.equals(beerbw));
+			System.out.println(beerkf.toString());       # toString() is overriden in Enum class to return the name of the enum constant.
+		}
+}
+o/p:
+-------
+KF
+366712642
+false
+KF
+
+
+Case1:  We can declare an enum either within the class or outside the class.
+* If declared outside the class the applicable access modifiers of enum would be  public, default, strictfp.
+* If declared inside the class the applicable access modifiers of enum would be  public, default, strictfp, static, private, protected.
+
+Case2:  We cannot declared an enum inside a method.  We will get CE:
+
+enum vs Switch:
+-----------------
+
+In flow controls, we discussed about switch statement:
+
+"5. Switch argument can take various type of values.
+	until v1.4 - the allowed datatypes were, byte, short, int and char.
+	from  v1.5 - the corresponding wrapper classes and enum types are allowed. Byte, Short, Integer, Character and enum.
+	in	  v1.7 - String type argument is also allowed."
+	
+Hence since 1.5, we can pass enum constant as switch argument.
+Also, if we are passing enum as argument to switch statement, then every case label should be a valid enum constant.  Else CE:
+
+
+	public static void main(String[] args) 
+	{
+		Beer b = Beer.KF;
+		
+		switch(b)					# switch statement takes enum reference variable as argument.
+		{
+		case KF: 
+			System.out.println("KF");
+			break;
+		case KO: 
+			System.out.println("KO");
+			break;
+		case FO: 
+			System.out.println("FO");
+			break;
+		case BW: 
+			System.out.println("BW");
+			break;
+		case Zingaro: 						# CE: will be thrown as "Zingaro" is  not enum constant.
+			System.out.println("Zingaro");
+			break;		
+		default: 
+			System.out.println("Bullet");
+		}
+	}
+}
+o/p:  KF
+
+Enum vs Inheritance:
+--------------------
+1. Every enum is a direct class of java.lang.Enum class.  Enum class extends directly from Object class.
+2. As every enum class extends directly from java.lang.Enum class, there is no chance of extending from any other enum, as java does not support multiple inheritance.
+3. As every enum is "final" implicitly, we cannot create child classes of enums.
+4. Because of the above reasons, inheritance concept is not applicable to enums explicitly.
+5. But, enum can implement multiple interfaces.  This is allowed.
+
+
+java.lang.Enum class:
+---------------------
+1. Enum class is the super class of all enums we declare in java.  hence all enums we declare will be direct child classes of Enum class.
+2. Enum is an abstract class and direct child class of Object class.
+3. Enum implements Seriablizable and Comparable interfaces. hence every enum we declare is by default serializable and comparable.
+
+ordinal() method:
+------------------
+Within the enum, the order of the constants are important.  The ordinal() method returns the ordinal of the enumeration constant (the position in its enum 
+declaration, where the initial constant is assigned an ordinal of zero).
+Eg:
+
+public class Beerclass 
+{
+		public static void main(String[] args)
+		{
+			Beer beerkf = Beer.KF;
+			Beer beerfo = Beer.FO;
+			Beer beerko = Beer.KO;
+			Beer beerbw = Beer.BW;
+							
+			System.out.println(" KF ordinal: " + beerkf.ordinal());
+			System.out.println(" FO ordinal: " + beerfo.ordinal());
+			System.out.println(" KO ordinal: " + beerko.ordinal());
+			System.out.println(" BW ordinal: " + beerbw.ordinal());
+		}
+}
+o/p:
+
+ KF ordinal: 0
+ FO ordinal: 1
+ KO ordinal: 2
+ BW ordinal: 3
+
+
+The following methods of Object class are overridden in the Enum class:
+-----------------------------------------------------------------------
+
+hashCode() method:
+------------------
+This method in Enum class, calls the super() class hashCode() method, which returns an integer value for the enum object.
+
+toString() method:
+------------------
+This method is overridden to return the name of the enum constant as contained in the declaration.
+
+equals() method:
+-----------------
+Same as Object class equals method which used the "==" operator to compare two enum objects.  Returns true if the specified object is equal to this enum constant.
+
+finalize() method:
+-------------------
+enum classes cannot have finalize method.  Hence this class is overridden as empty implementation in Enum class.
+
+
+enums power:
+------------
+1. As mentioned earlier, enums are internally implemented as a class.
+2. Hence, we can declare and use enums like a class by declaring variables, methods and constructors in addition to enum constants.
+3. We can also declare a main() method inside an enum, which allows to invoke enum directly from command prompt.
+
+For the above reasons, Java's enum is more powerful than any other language enums.
+
+4. Inside an enum, since we can declare variables, methods and constructors in addition to enum constants, it is important to note there cannot be an enum
+without constants.  Without constants, an enum cannot take extra members like variables, methods or constructors.
+5. If an enum takes extra members, then compulsarily the list of constants should be the first line.  Other members should come after the contants declaration.
+6. Empty enums are valid in Java.  An enum can either be empty, or contain only enum constants or contain all, constants, variables, methods, constructor etc.
+You cannot declare an enum with only variables, methods and constructors. This defeats the purpose of an enum. It becomes a class.
+
+enum constructors:
+------------------
+1. Within an enum, we can declare constructors.
+2. enum constructor will be executed automatically when the enum is loaded in memory. This is because, the enum constants will be created at the time of 
+class loading as every enum constant is always, public static final. 
+3. Internally, the enum constructor will be executed once the enum is loaded into memory.  The enum constructor will be executed once for every constant delcared
+as part of the enum constants. This happens internally.  
+4. We cannot create objects of enum explicitly. hence we cannot call the constructor of enums directly.  They are executed internally when loaded into memory.
+Eg:  Beer b = new Beer()  # not allowed.
+5. Within an enum we can take instance methods and static methods. But we cannot take abstract methods.
+
+
+Eg: 
+public enum Beer 
+{
+	KF, FO, KO, BW;
+	
+	Beer()
+	{
+		System.out.println("Enum Constructor");
+	}
+}
+
+public class Enumexp 
+{
+	public static void main(String[] args) 
+	{
+		Beer b = Beer.KF;
+		
+		System.out.println(b);		
+	}
+}
+o/p:
+Enum Constructor
+Enum Constructor
+Enum Constructor
+Enum Constructor
+KF
+
+enum Vs Enum  Vs Enumeration:
+-----------------------------
+enum  -  It is a keyword to used to define a group of named constants.
+Enum  -  It is the base class of all java enums.  Its present in  java.lang package.
+Enumeration - It is an interface present in java.util package used to retrieving objects from collections one by one.
+
+
+
+
+
+
+

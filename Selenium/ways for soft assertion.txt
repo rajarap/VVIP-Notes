@@ -1,0 +1,78 @@
+Q. Ways to implement soft assert in Selenium Webdriver 3 using TestNG?
+A. 
+There are 2 ways to implement soft assertion in Selenium Webdriver 3 using TestNG.
+
+1. using try-catch block with Throwable t.
+2. using SoftAssert object.
+
+
+Eg 1:  Hard assert converted into soft assert by including it within a try-catch block
+--------------------------------------------------------------------------------------
+
+	public void bankManagerLoginTest() throws InterruptedException
+	{
+		extentTest = extent.createTest("loginAsBankManager() logs");
+		String title = driver.getTitle();
+		//Protractor practice website - Banking App
+		try
+		{
+			Assert.assertEquals(title, "Protractor practice website - XYZ App");
+		}
+		catch(Throwable e)
+		{
+			e.getMessage();
+			wait = new WebDriverWait(driver, 3, 500);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("btn_bankMgr_xpath")))).click();
+			extentTest.info("Clicked on bank manager button");
+		}
+
+		try
+		{
+			extentTest.info("Asserting if Add Customer button is displayed");
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(OR.getProperty("btn_Customers_xpath"))));
+			Assert.assertTrue(isElementPresent(By.xpath(OR.getProperty("btn_addCustomer_xpath"))));
+			extentTest.info("Assertion successfull - Add Customer button is displayed");
+		}
+		catch(Exception e)
+		{
+			extentTest.info("Assertion failed - Check exception stack trace");
+			e.printStackTrace();
+		}
+		
+Eg 2:  By using the object of the SoftAssert class and assertAll() method.
+--------------------------------------------------------------------------
+
+public class BankManagerLoginTest extends TestBase
+{	
+	SoftAssert sassert = new SoftAssert();
+	@Test
+	public void bankManagerLoginTest() throws InterruptedException
+	{
+		extentTest = extent.createTest("loginAsBankManager() logs");
+		String title = driver.getTitle();
+		//Protractor practice website - Banking App
+
+			sassert.assertEquals(title, "Protractor practice website - XYZ App");
+			wait = new WebDriverWait(driver, 3, 500);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("btn_bankMgr_xpath")))).click();
+			extentTest.info("Clicked on bank manager button");
+
+		try
+		{
+			extentTest.info("Asserting if Add Customer button is displayed");
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(OR.getProperty("btn_Customers_xpath"))));
+			Assert.assertTrue(isElementPresent(By.xpath(OR.getProperty("btn_addCustomer_xpath"))));
+			extentTest.info("Assertion successfull - Add Customer button is displayed");
+		}
+		catch(Exception e)
+		{
+			extentTest.info("Add Customer Assertion failed - Check exception stack trace");
+			e.printStackTrace();
+		}
+		
+		sassert.assertAll();
+	}
+}
+
+Eg 3: In TestNG, we use only Assert Statements. There is no method by name verify() in TestNG. Verify is implemented in terms of if-else or try-catch. 
+

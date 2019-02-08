@@ -1,0 +1,53 @@
+Goals of  performance  testing:
+
+1. Production readiness from  performance point of view
+	- application response time with expected load.
+	- system behaviour with unexpected loads
+	- system behaviour with spike loads
+	- System scalability
+	- best system configuration for optimal performance
+2. Comparing your system performance on multiple platforms.
+3. Comparing performance of system configuration
+4. Evaluating your system against performance criterias
+5. Determining the thruput and response time
+6. Discover what parts of the application perform poorly and under what conditions
+7. Analysing and finding the source of the performance problems
+8. Support system tuning.
+
+
+Pre-requistic for performance testing
+
+1. Perf env - a dedicated, defect-free and stable performance environment.
+2. Perf env should be as close to production env.
+3. Gather performance testing requirements:
+	- Application architecture
+	- Application development methodologies
+	- Server informations, configurations, db size
+	- Application usage information
+	- Application usage patterns.
+	- Perf acceptance criteria
+4. Performance test plan
+5. Performance test data
+6. Performance tool requried to perform the test
+7. Training on the performance tools and processes
+
+
+Performance Testing Activites
+
+1. Identify Test Environment
+2. Identify Performance Acceptance Criteria
+3. Plan and Design Test
+4. Configure Test Environment
+5. Implement Test Design
+6. Execute Tests
+7. Analyze Reports and Re-test
+
+Symptons of web application performance problems
+
+* Long response time
+* Memory leaks
+* High CPU usage
+* Too many open connections
+*  Database deadlocks
+* Page not available
+* Page check errors

@@ -1,0 +1,23 @@
+super() vs this():
+-----------------
+
+1. The first line inside a constructor should be either super() or this().
+2. If we dont specify anything, compiler will always  call super().
+
+Rules:
+------------
+1. The first line inside a constructor should be either super() or this().  If you keep them in second or any other line, CE:
+2. We cannot specify both super() and this() in the same constructor. It will throw CE:.  We can specify only one of them in the first line.
+3. super() or this() can only be used inside a constructor.  We cannot use them in normal methods. If  we do we will get CE:.
+4. this() - to call current class constructors.
+5. super() - to call  parent class constructors.
+6. compiler provides default as super(), but not this().
+
+There are super() and this() methods.  Also there are "super" and "this" keywords in java.
+
+		super() and this()											super and this
+--------------------------------------------------------------------------------------------------------------------------
+1. these are constructor calls			1. these are keywords used to reference super and current class instance members.
+2. can be used only in constructors		2. these keywords can be used anywhere except static members and static blocks.
+
+

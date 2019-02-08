@@ -1,0 +1,75 @@
+https://www.skillsyouneed.com/ips/communication-skills.html
+
+Learn about some practical strategies you can use to handle conflict in the workplace.
+
+Expand all
+
+• Tell me about a team project when you had to work with someone difficult.
+• Tell me about a time you had a conflict at work.
+• Give an example of a time you had to respond to an unhappy manager/customer/colleague.
+• Tell me about a time that you disagreed with a rule or approach.
+
+Have you ever had a team member who kept raising objections on projects? How did you (or would you) manage them?
+How would you advise a team member who complained about a coworker’s behavior?\
+
+
+dangling references
+space leaks
+gc can be scheduled. If threshold is reached, gc can be initiated
+heap  - memory available for storing objects
+gc should not cause long pauses to the application when gc is operational - concurrent vs stop the world
+fragmentation - compaction
+scalability
+
+GC design:
+serial  vs parrallel gc
+concurrent vs stop the world gc
+compacting vs non-compacting vs copying
+
+GC Performance metrics:
+
+GC Throughput - time spent in not performing GC.
+GC overhead - time spent in performing GC
+Pause time - length of time the app stops/pauses during GC
+Frequency of GC - how many times GC occurs is relative to the executing  of the application
+Footprint - related to size like heap size
+Promptness - time when obj becomes garbage and when GC collects the dead obj and memory becomes available.
+
+https://www.youtube.com/watch?v=849XrqAbg6c - answer architecture question
+
+
+
+
+
+birth chart
+kethu  - 3rd house
+rahu  - 9th house
+
+lord of 5th house - suryan
+lord of 9th house - Guru
+
+current position
+rahu 5th house from lagnam
+kethu 11th house from lagnam
+
+sani dese 
+sukran bukti - next suryan bukti - chandran
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

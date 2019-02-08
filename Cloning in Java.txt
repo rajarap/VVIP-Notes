@@ -1,0 +1,29 @@
+Clone():
+------------
+
+* clone() is a method in the Object class.  
+* the process of creating exactly duplicate objects is called cloning. 
+* main objective of cloning is maintian backup.
+* sytax of clone method in Object class is    -  protected native Object clone() throws CloneNotSupportedException
+
+Imp points:
+-----------
+1. We can call the clone() method only for clonable objects.
+2. An object is said to be cloneable only if the corresponding class implements the cloneable interface.
+3. clonable interface is avaiable in the java.lang package. It is a marker interface and does not contain any methods.
+
+
+Deep cloning vs Shallow Cloning:
+--------------------------------
+Shallow cloning:  The process of creating just duplicate reference variable but not duplicate object is called shallow cloning.
+Deep cloning: The process of creating exactly duplicate independent object is called deep cloning.
+
+Eg:
+
+Test t = new Test();
+Test t1 = new Test();
+Test t2 = t1;          			 # shallow cloning
+Test t3 = (Test)t1.clone();		 # deep cloning.  as clone() returns on Object, you need to typcast it to the respective class.
+
+By default, cloning means deep cloning.
+

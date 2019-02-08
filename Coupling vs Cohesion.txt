@@ -1,0 +1,33 @@
+Coupling vs Cohesion: part1 - 248
+-------------------------
+
+Coupling: 
+--------------
+The degree of dependency between components is called coupling. 
+Eg: class A is dependent on class B, class B is dependent on class C etc
+
+Note: Coupling is not recommended because it has various disadvantages:
+
+1. Without affecting the other dependents its diffcult to modify code in one component. Hence enhancement will become diffcult.
+2. It does not promote re-usability.
+
+Hence it is highly recommended to maintain loosely coupled classes. Dependency between components shoud be as less as possible.
+
+
+
+
+Cohesion:
+----------
+Every component must contain a clear and well-defined functionality. Such component is said to follow high-cohesion.
+
+Eg: 
+1. If you define all the functionalities like login, registration, payments etc in one class, then that class is said to follow low-cohesion.
+2. If each functionalities are defined in seperate well defined classes then these classes are said to follow high-cohesion.
+
+High cohesion is always good for programming as it has various adv:
+
+1. Without affecting other components we can modify any component. Hence enhancement becomes very easy.
+2. It improves maintainability of the application.
+3. It promotes re-usability of the code.
+
+Hence,  LOOSE Coupling and HIGH cohesion is a good programming practice.

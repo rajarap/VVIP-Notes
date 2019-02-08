@@ -1,0 +1,35 @@
+To push to git
+-------------------------
+git init - to initialize a normal maven directory to a git repository directory
+git remote add origin <git directory path > - register your local git repo with the actual repo on git
+git status
+git add .
+git status
+git commit -m "added minor changes"
+git push origin  master   //provide username and password
+
+To pull from git
+----------------------
+create a folder in your local machine, start cmd from the current folder and give the folowing command.
+git clone <git directory path >  //before pulling you have to clone once in your local machine.
+git pull  origin master
+
+
+Technologies worked on:
+-----------------------------------
+Java (programming language)
+TestNG framework (testng.xml)
+Selenium WebDriver 2 and 3
+Maven project (pom.xml)
+Apache poi (read/write excel)
+log4j (logging)
+git/github (VC)
+jenkins (CI)
+ExtentReport(reporting)
+
+for extent report in jenkins.. type the following in Script console
+
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+
+un: raju2652@gmail.com / rajarap
+pw: github123**

@@ -1,0 +1,113 @@
+Flow Controls
+--------------------
+Flow controls describes the order in which the statements will be executed at runtime.
+
+Three type of flow controls:  Selection statements, Iterative statements, Transfer statements.
+
+Selection statements - if-else and switch
+Iterative statements - while, do-while, for(), for-each()
+Transfer statements - break, continue, return, try, catch, finally
+
+if-else:
+---------
+1. Argument provided in 'if' should always be of type boolean.  Any other type will throw CE:
+2. Curly braces after 'if' is optional. without curly braces we can provide only one statement and that statement should not be a declarative statement.
+Eg: if(true)
+		s.o.pl("hello");    <-Valid
+		
+	if(true)
+		x=10;			<-invalid
+	
+	if(true)
+	{
+		x=10;			<-valid
+	}
+	
+	if(true);			<-valid
+	
+Switch statement:
+------------------
+1. If several options are possible then we should go for switch statement.  if-else not recommended.
+
+switch (x)
+{
+	case1:
+			Action1;
+	case2:
+			Action2;
+	case3:
+			Action3;
+			
+	default:
+			default action;
+}
+
+2. Curly braces are mandatory.
+3. Both case and default are optional inside a switch. You can have empty switch.
+4. Within a switch, every statement should be under a 'case' or 'default'.  Independent statements are not allowed.
+5. Switch argument can take various type of values.
+	until v1.4 - the allowed datatypes were, byte, short, int and char.
+	from  v1.5 - the corresponding wrapper classes and enum types are allowed. Byte, Short, Integer, Character and enum.
+	in	  v1.7 - String type argument is also allowed.
+6. Apart from the above datatypes, if any other data type is passed as switch argument, we will get CE:
+	int x = 10
+	switch(x)	<-valid
+	
+	char c = 'a';
+	switch(c);  <-valid
+	
+	long l = 10l;
+	switch(l);	<-invalid
+	
+	switch(true);	<-invalid
+
+7. Every case should contain a label within the range of the switch argument type, otherwise we will get CE:
+	byte b = 10;
+	switch(b)  <- b is byte type
+	{
+		case 10;  <- 10 is byte type
+		case 100;  <- 100 is byte type
+		case 1000;  <- CE: outside the range of byte (-128 to 127)
+	}
+	
+	switch(b+1)    <- b+1 will make it int type
+	{
+		case 5:		<- 5 is int type
+		case 101: 	<- 101 is int type
+	}
+	
+8. Case label should always be a valid constant.  You cannot pass a variable as case label.
+	int x = 10;
+	int y = 20;
+	switch(x)  
+	{
+		case 10:  	<-valid
+		case 100:   <-valid
+		case y: 	<-invalid  CE:
+	}
+	
+	if y is declared as final, then CE: will not be thrown.
+
+9. expression are allowed in switch statement and case label. For case label it must be a constant.
+	int x = 10;
+	final int y = 20;
+	switch(x+10)  
+	{
+		case 10+5: 		<-valid
+		case 100+10:    <-valid
+		case y+10:	 	<-valid
+	}
+
+10. Duplicate case labels are not allowed.
+
+	int x = 10;
+	switch(x+10)  
+	{
+		case 10+5:  	<-valid
+		case 100+10:    <-valid
+		case 10+5:	 	<-invalid  CE:
+		case 97:		<-valid
+		case 'a':		<-invalid  CE:duplicate case label.  ('a' UNICODE value is 97)
+	}
+
+	

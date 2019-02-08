@@ -1,0 +1,16 @@
+There are 15 operators in java. They are:
+1. Increment/Decrement operators
+2. Arithematic operator
+3. Concatination operator
+4. Relational operator
+5. Equality operator
+6. Bitwise operator
+7. Short-circuit operator
+8. instanceof
+9. typeCase operator
+10. Assignment operator
+11. Conditional operator
+12. new operator
+13. []operator
+14. operator precedence
+15. Evalution order of java operands

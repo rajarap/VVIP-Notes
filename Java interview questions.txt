@@ -1,0 +1,540 @@
+Q. Explain what is RandomAccess in Java? Which class in Java implements RandomAccess?
+A. There are two classes which implement RandomAccess Interface. They are:
+
+ArrayList (Part of List<I>)    
+Vector    (Part of List<I>)
+
+Note: All collection classes implements Serializable and Clonable interface. In addition, ArrayList and Vector also implements RandomAccess interface.
+
+2) The purpose of RandomAccess Interface is to retrieve any random element in the Collection at the same speed. Example: I have a collection of 1 million objects. 
+Implementing RandomAccess interface makes your time to retrieve the 10th element and 17869th element the same. This makes ArrayList and Vector more powerful.
+
+3) RandomAccess Interface has no methods or fields and is also called a Marker Interface. These are used to indicate something to the compiler, in other words 
+implementing these interfaces is meant to imply some special treatment of the implementing class.
+
+=================================================================================================================================================================
+
+Q. Which are the immutable objects in JAVA?
+A. The String and all wrapper classes are immutable objects in JAVA.
+
+=================================================================================================================================================================
+
+Q. Which are the classes that override the .equals() method of the Object class?
+A. The classes that override the .equals() method of the Object class are String class, all wrapper classes and the all Collection classes.[not interface].
+
+=================================================================================================================================================================
+
+Q. Which are the classes that override the toString() method of the Object class?
+A. The classes that override the toString() method of the Object class are String class, all wrapper classes and the all Collection classes.
+
+=================================================================================================================================================================
+
+Q. Which are the classes implement the Comparable interface?
+A. The String and all wrapper classes implement the Comparable interface in JAVA.
+
+=================================================================================================================================================================
+
+Q. Which methods are used to convert a array into a list and list into an array?
+A. 
+The toArray() method of the Collection interface is used to convert a collection object into an array.
+The asList() method of Arrays class is used to convert an array into a collection object.
+
+
+		  ArrayList<String> al = new ArrayList<String>();
+		  al.add("Java");
+		  al.add("Interview");
+		  al.add("Questions");
+		  
+		  Object[] str = al.toArray();
+		  System.out.println(str);
+		  for(Object c:str)
+		  {
+			  System.out.println(c);
+		  }
+		  
+		  Integer[] a = new Integer[]{10,20,30,40};
+		  List<Integer> l = Arrays.asList(a);
+		  System.out.println(l);
+		  
+		  List<Object> t = Arrays.asList(str);
+		  System.out.println(t);
+	  
+
+=================================================================================================================================================================
+
+Q. What is the difference between == and .equals() method?
+A. 
+* == operator is used for reference comparison or memory address comparison.  
+* equals() method of Object class internally calls the == operator and does the  same operation of comparing reference objects or memory address comparison.
+* equals() metod of String class is overriden to compare the contents of the String and not for String reference comparison.
+
+This method is overriden in String class, wrapper classes and all collection classes for content comparison.
+
+=================================================================================================================================================================
+
+Q. What is hashcode and why is it used in Java?
+A. 
+* hashcode() is a method available in the Object class. It returns the identification number of an object, which is an int value.  
+* You can obtain the hashcode of a object by calling the hashcode() method on the object.  
+	Eg. String s1 = new String("Java World");
+		system.out.println(s1.hashcode());       o/p: 776333
+* Hashcode of two objects will be same, if the contents of the objects are same.  This is done to avoid using these two objects as keys in hashmap or hashtable
+as keys should be unique.
+
+Note: http://www.instanceofjava.com/2015/08/why-stringbufferstringbuilder-not-override-eqlas-method-hashcode-method.html
+
+=================================================================================================================================================================
+
+Q. What is the difference between String class, StringBuffer class and StringBuilder class?
+A. 
+1. String class is immutable.  StringBuffer and StringBuilder classes are mutable.
+2. StringBuffer class is thread-safe.  Only one thread can access the SB object at a time.  This degrads the performance as threads will be in waiting state.
+3. StringBuilder class is not thread-safe.  Multiple threads can access the objects simentenously, thus increasing performance.
+
+=================================================================================================================================================================
+
+Q. What is the difference between the following two statements?
+String s1 = new String("Java");
+String s2 = "Java";
+String s3 = "Java";
+
+s1 object will be created in the heap memory.  A copy of the object will be created in the SCP area also.
+s2 is a String variable containing a string literal, not an object.  Hence s2 will only be created in the SCP area and not in the heap memory. 
+Also, SCP does not entertain duplicate objects. s3 will point to the same content in the SCP area where s2 points to. That is, objects with same content. 
+JVM will check if the object with same content is already present in the SCP. If present the exisitng object will be used. 
+If not a new object will be created. Hence there is no chance of duplicate objects existing in SCP area with same contents.
+Objects in SCP area cannot be destroyed by GC.  GC can never enter the SCP area.  The objects will only be destroyed when JVM shuts down.
+Note: Page 320 in Part2.
+
+SCP - String Constant Pool.
+=================================================================================================================================================================
+
+Q. What is interning of a String in Java?  In String class, there is a method called intern().  Why is it used?
+A. The String class intern() method is used, if a String object in the heap, wants to reference an object in the SCP area, the intern() method is used.
+Eg. String s1 = new String("Java");   # This will create s1 pointing to object "Java" in the heap area and a copy will be created  in the SCP area.
+	String s2 = s1.intern();		  # Here the s2 object will be created in the heap area and will point to the copy of s1 in the SCP area.
+
+If corresponding object is not present in SCP area, intern() will create that object and return it.
+
+Note: Page 324 in Part2.
+
+=================================================================================================================================================================
+
+Q. Why is a String class immutable in Java?
+A. 
+1. In a program, if any String object is required to be used repeatedly, it is recommended to create a seperate String object and use this where ever required 
+in the program.  This enhances memory utilization and increases performance.
+2. This can be achieved by String Constant Pool(SCP).  In SCP, a single string object will be shared for all required references.
+3. The main disadvantage of this is, when several references are pointing to the same String object in SCP, if we perfrom any change to the String Object, 
+all the references pointing to it will  be impacted.
+4. To solve this problem, SUN Microsystems declared String Objects to be immutable.  Once a String object is created, we cannot perform any change to the
+existing String Object.
+5. The  main disadvantage of SCP is String immutability.
+
+=================================================================================================================================================================
+
+Q. Are final and immutability same?
+A. 
+final vs Immutability in Java:
+---------------------------------
+final : In Java, final is a modifier which is used for class, method and variable also. When a variable is declared with final keyword, 
+it’s value can’t be modified, essentially, a constant.
+
+Immutability : In simple terms, immutability means unchanging over time or unable to be changed. In Java, we know that String objects are 
+immutable means we cant change anything to the existing String objects.
+
+Differences between final and immutability
+----------------------------------------------
+* final means that you can’t change the object’s reference to point to another reference or another object, but you can still mutate its state 
+(using setter methods e.g). Whereas immutable means that the object’s actual value can’t be changed, but you can change its reference to another one.
+
+final - pointing to same memory location, but the contents can change.
+immutable - whenever content changes, the reference variable will point to new memory location.
+
+* final modifier is applicable for variable but not for objects, Whereas immutability applicable for an object but not for variables.
+
+* By declaring a reference variable as final, we won’t get any immutability nature, Even though reference variable is final. We can perform any type of change 
+in the corresponding Object. But we cant perform reassignment for that variable.
+
+* final ensures that the address of the object remains the same whereas the Immutable suggests that we can’t change the state of the object once created.
+
+final - reference variable should always point to the same memory location.   Same house address, but number of ppl can vary.
+Immutability -  means contents should not change.  Whenever, number of ppl increases, change address.  bachelor, then wife, then kids.
+
+
+When you declare a reference variable as final, you cannot re-assign that reference variable to some other object.
+Eg. final StringBuilder sb = new StringBuilder("Java");
+	sb = new StringBuilder("World");  # this will throw CE: cant assign a value to final variable sb.
+	
+By declaring a reference variable as final, we cannot get any immutability. We can perform any type of change through the reference variable is final:
+Eg. final StringBuilder sb = new StringBuilder("Java");
+	sb.append("World");
+	s.o.p(sb);     # JavaWorld
+	
+Though 'sb' is declared as final, its content can still be changed.  If content can be changed then by just declaring 'sb' final we cannot achieve immutablity. 
+	
+Hence final and immutability are different concepts.     final and mutability are same.
+	
+=================================================================================================================================================================
+
+Q. Explain the below code:
+Student s = new Student();
+s.toString();
+s.hashcode();
+
+A. Here we are calling the toString() and hashcode() methods of the Object class in Java.
+s.toString() - returns the string representation of the Student object s.  The output will be Student@<hexadecimal-number>
+s.hashcode() - returns the integer value of the object. This integer value is converted into hexadecimal and is displayed in the output of toString() method.
+
+* When the hashcode() method of the object class is invoked on the same object at different places during the execution of the program, the hashcode() 
+method must consitently return the same integer value.
+* If two objects are equal according to the equals() method of the Object class, then calling the hascode() method on each of the two objects must produce
+the same integer result.
+* If two objects are unequal according to the equals() method of the Object class, then calling the hascode() method on each of the two objects should produce
+different integer result. This aids in improving the performance in hashing.
+
+=================================================================================================================================================================
+
+Q. What is the use of Class.forName() method in Java?
+A. 
+1. Class.forName() method is present in the java.lang package.
+2. It is used to create the object of a class, that is only known at runtime.  That is if the class for which the object should be created is not known in advance
+then for such classes we should use the Class.forName() method to create the instance for the class.  Read it as, "for the name passed as parameter, create constructor
+a class, and then create a instance of it.
+Eg:   Class.forName(com.gazt.Student).newInstance();
+
+for the name "com.gazt.Student", construct a class, and for that class, create a new instance.   This is like reverese engineering.
+
+=================================================================================================================================================================
+
+Q. What are the different ways to create objects in Java?
+A. There are 6 different ways to create an object in Java:
+
+1. using new keyword - Student s1 = new Student();
+2. using Class.forName - Student s2 = (Student)Class.forName("com.gazt.Student").newInstance();  #The forName() method internally uses reflections concept.
+3. using reflections.
+	Class c = Class.forName("com.gazt.Student");
+	Constructor[] constructor = c.getConstructors();
+	constructor[0].setAccessible(true);
+	Student s3 = (Student) constructor[0].newInstance();
+4. using cloning - Student s4 = s1.clone();		//possible only if Student class implements the clonable interface.
+5. using de-serialization - 
+	//serializing first
+	Student s5 = new Student(101, "AAAA");    
+	FileOutputStream fos = new FileOutputStream("Student.txt");
+	ObjectOutputStream oos = new ObjectOutputStream(fos);
+	oos.writeObject(s5);
+	oos.flush();
+	
+	//de-serializing the serialized object
+	FileInputStream  fis = new FileInputStream("Student.txt");  	//to read from the file containing the serialized object
+	ObjectInputStream ois = new ObjectInputStream(fis);
+	Student s6 = (Student)ois.readObject();
+	ois.close();
+6. using initilizing array - When initilizing an array, instance of the array is returned, as array is an object in Java.
+	int[] a = {10,20,30,40};  //this will create an instance of Integer array and initilize it with the provided values
+	
+=================================================================================================================================================================
+
+Q. What is the difference between "new" keyword and newInstance() method?
+A. 
+
+Using "new" keyword:
+When we know the classname for which we have create an object, in advance, then we must use the "new" keyword to create the object of the class.
+
+Using newInstance() method:
+When we dont know the classname for which we have to create an object, or if we have to create an object of a class at runtime dynamically, 
+then we must use the newInstance() method to create the object of such classes.
+
+* There is a class by name "Class" in java.lang package. 
+* This is a final class and hence cannot be extended.
+* This class implements the Serializable interface.
+* This class contains a static method forName() method which takes the name of the class as parameter and constructs the Class of that classname 
+  passed as parameter.
+* On that class created using the forName() method, we should call the newInstance() method to create the object of the class.
+
+Eg:  Object obj = Class.forName("com.gazt.Student").newInstance();
+
+Assume, the below class takes classnames as arguments from command line.  
+
+public class Practice 
+{
+	public static void main(String[] args) 
+	{
+		
+		
+	}
+}
+
+javac Practice.java     #code compiled fine
+java Practice Student 	#passing Student class a argument to Practice class.
+
+Think how will you create the object of Student class which is passed as argument.
+
+* You may think as follows:
+	1. arg[0] s = new arg[0]();   # CE will be thrown
+	2. String cname = arg[0];     # this will create a String literal Student.
+	
+
+Hence, when you dont know in advanced, for which class to create an object, you cannot use the "new" keyword to create the object.
+In such situations, we must use the newInstance() method, which is part of the class "Class".  Hence the above code should be written as:
+
+public class Practice 
+{
+	public static void main(String[] args) throws Exception 
+	{
+		Object obj = Class.forName(args[0]).newInstance();
+		
+		System.out.println("Object created for " + obj.getClass().getName()+" class");
+	}
+}
+
+Now when we compile and run this code:
+
+javac Practice.java
+java Practice Student  # the o/p will be "Object created for Student class"
+java Practice Customer # the o/p will be "Object created for Customer class"
+java Practice Employee # the o/p will be "Object created for Employee class"
+
+Hence using the newInstance() method, we can create objects of any class which provided at runtime.
+
+=================================================================================================================================================================
+
+Q. What is the difference between instanceof and isInstanceOf() method?
+A. 
+The answer to this question is similar to the above answer.  
+
+			instanceof															isInstanceOf()
+				
+1. is a keyword or operator											1. is a method in the Class class.
+2. is used when you know the class name in advance.					2. is used when the name of the class is not known in advance. We will know only at runtime.
+3. to check if the object is of particular type or not.				3. to check if a object is of particular type at runtime.
+
+Thread t = new Thread();												class Test
+to check if "t" is a instance of Runnable type or not					{
+System.out.println(t instanceof Runnable)									public static void main(String[] args) throws Exception
+Runnable interface is known in advance.										{
+																				Thread t = new Thread();
+																				syso(Class.forName(args[0]).isInstanceOf(t));
+																			}
+																		}
+																		java Test Runnable   # returns true as 't' is an instance of Runnable class
+																		java Test String	 # returns false as 't' is not an instance of String class
+=================================================================================================================================================================
+
+Q. What is the difference between ClassNotFoundException and NoClassDefFoundError?
+A. 
+
+NoClassDefFoundError:  (unchecked exception, as it is an error not exception)
+---------------------
+Eg:  Test t = new Test();
+Test is a hard coded class name. For hardcoded class name which is known beforehand, if at runtime if the corresponding .class file is not available or 
+is not there, then we will get runtime exeception saying NoClassDefFoundError.
+
+ClassNotFoundException:  (checked exception)
+-----------------------
+If the class is not hardcoded, and the class will be provided dynamically at runtime, 
+Eg:
+Object obj = Class.forName(args[0]).newInstance();
+
+java Test Student  # at runtime, for dynamically provided classname, if the corresponding .class file is not available, then we will get runtime 
+exeception saying ClassNotFoundException: Student.
+
+
+=================================================================================================================================================================
+Q. What is the difference between HashMap, HashSet and HashTable?
+A. 
+
+			HashMap																	HashTable
+				
+1. HashMap is non-synchronized										1. HashTable is synchronized.
+2. Multiple threads can access HashMap object simentenously			2. only one thread can access HashTable object at a time.
+3. Performance wise it is fast, since multiple threads are allowed.	3. Performance wise it is slow, as only one thread can access the object.
+4. Allows one null key, and multiple null values.					4. does not allow any null key and null values.
+5. Can be synchronized by Collections.synchronizedMap(hashmap)		5. HashTable in inherently synchronized and cannot be unsynchronized.
+6. Traversed using Iterator											6. As this is legacy class, is traversed using Emumerator. Iterator can also be used.
+7. Inherits "AbstractMap" class.									7. Inherits "Dictionary" class.
+
+
+ 			HashMap																	HashSet
+				
+1. HashMap is implemented using Map interface						1. Implemented using Set interface.
+2. Stores data in the form of Key-Value pairs. 						2. Stores only objects.
+3. hashcode is calculated using key object							3. Member object is used for calculating hascode.
+4. 																	4. .
+5. 																	5. .
+6. 																	6. .
+7. Faster as it uses keys to access the values.						7. Slow comprared to HashMap.
+ 
+=================================================================================================================================================================
+Q. What is the difference between HashMap and TreeMap?
+A. 
+
+
+
+ =================================================================================================================================================================
+Q. How to create a singleton object?
+A. Singleton object can be created using the following:
+
+1. private constructors
+2. factory method.
+
+Private Constructor:  If a constructor is declared as private, then this constructor can only be called from within the class
+in which it is declared.  It cannot be called from outside the class.
+
+Factory method:  By using the class name, if we call any method which returns the same class object, then this method
+is called as Factory method.
+
+Observation1: 
+--------------- 
+if factory methods have to be called by class name, then should all factory methods be declared as static.  
+NEED NOT BE. 
+Factory methods can be static or non-static based on the requirement.  However, when creating a singleton object, it should
+be declared as static to fulfill the requirment of creating single object of a class.
+
+Observation2:
+--------------
+As per the above analysis, factory methods can be used to create objects of a class.  Also is Java, constructors are used to 
+create and initialize objects of a class.  Hence the questions arises, which is be best way to create objects of a class.
+
+Using constructors or by using factory methods?
+
+=================================================================================================================================================================
+Q. Can we have private constructors ?
+A. Like any method we can provide access modifier to the constructor. 
+Constructors can be declared with public, private, protected and default.
+If it’s made private, then it can only be accessed inside the class.
+
+=================================================================================================================================================================
+Q. Do we need such ‘private constructors ‘ ?
+There are various scenarios where we can use private constructors. The major ones are
+
+1. Internal Constructor chaining
+2. Singleton class design pattern
+
+Q. What is a Singleton class?
+A. As the name implies, a class is said to be singleton if it limits the number of objects of that class to one.
+We can’t have more than a single object for such classes.  
+Singleton classes are employed extensively in concepts like Networking and Database Connectivity.
+
+Design Pattern of Singleton classes:
+The constructor of singleton class would be private so there must be another way to get the instance of that class. 
+This problem is resolved using a class member instance and a factory method to return the class member.
+
+Eg:
+
+import java.io.*; 
+  
+class MySingleton 
+{ 
+    static MySingleton instance = null; 
+    public int x = 10; 
+    
+    // private constructor can't be accessed outside the class 
+    private MySingleton() {  } 
+   
+    // Factory method to provide the users with instances 
+    static public MySingleton getInstance() 
+    { 
+        if (instance == null)         
+             instance = new MySingleton(); 
+   
+        return instance; 
+    }  
+} 
+  
+// Driver Class 
+class Main 
+{ 
+   public static void main(String args[])     
+   { 
+	   MySingleton a = MySingleton.getInstance(); 
+       MySingleton b = MySingleton.getInstance(); 
+       a.x = a.x + 10; 
+       System.out.println("Value of a.x = " + a.x); 
+       System.out.println("Value of b.x = " + b.x); 
+   }     
+} 
+
+o/p:
+Value of a.x = 20
+Value of b.x = 20
+
+===========================================================================================================================================
+
+Q. What is the use of the singleton() method in the Collections class?
+A. 
+java.util.Collections.singleton() method is a java.util.Collections class method. It creates a immutable set over a single specified element. 
+An application of this method is to remove an element from Collections like List and Set.
+
+Example:
+myList : {"Geeks", "code", "Practice", " Error",  "Java", 
+          "Class", "Error", "Practice", "Java" }
+
+To remove all "Error" elements from our list at once, we use 
+singleton() method 
+myList.removeAll(Collections.singleton("Error"));
+
+After using singleton() and removeAll, we get following.
+{"Geeks", "code", "Practice", "Java", "Class", "Practice", "Java" }
+
+===========================================================================================================================================
+Q. What is Serialization and Externalization ?
+A. 
+java.io.Serializable is a marker interface in Java.
+java.io.Externalizable is an interface in Java.  It's not a marker interface.
+
+A marker interface does not contain any methods.  Hence any class that implements the marker interface does not have to 
+implement anything. 
+
+In Java, a serializable object is an object which inherits either "java.io.Serializable" or "java.io.Externalizable" interface.
+
+When a class implements Serializable interface, it does not have to implement anything.  JVM will check if the class implements
+this interface in-order to serialize the object of the class.  Else JVM will not allow to seriliaze the object.
+
+Serialization is persisting the state of an object to a file.  If this object has refereces to other objects, they too will 
+be serialized.  All connected objects to which there are live references are also serialized, as well as all connected 
+objects of all connected objects, etc.
+
+Externalization:  Externalization is used, when you want to override the default implementation of serializing an object using
+the Serialization process.  Using externalization,  you can have control over the serialization process.
+
+Externalizable interface extends from Serializable interface, and contains 2 methods (readExternal(), writeExternal())
+These 2 methods will be automatically called when serializing and de-serializing the object.
+
+One difference between Serialization and Externalization is, when you serialize an externalizable object, the default 
+constructor will be automatically called first.  Only after this call, the readExternal() method will be called.
+
+If, a class extends a class that implements the Externalizable interface, the child class also is externalizable.
+You must call the readExternal() and writeExternal() methods in order to correctly serialize or de-serialize the child
+class object. 
+
+Transient keyword:  
+------------------
+This keyword comes into picture only during serialize and de-serialization process.
+Variables in a class can be marked as "transient".  
+When a variable is marked as transient, it will be excluded from the serialization process.  The state of this variable will
+not be saved on to a file.
+Eg: when you dont want to save sensitive information like password stored in a String variable, you can mark this variable as
+transient so that it is not persisted and transfter over the network to another host.
+
+
+During externalization, the developer has to take care of the entire serialization process.  
+During serialization, the JVM will take care of the serialization process.
+
+Hence the best approach will be, to allow JVM to take care of serialization, and use transient keyword to restrict JVM from
+persisting data which is not required for serialization.
+
+Note: https://www.techrepublic.com/article/understand-when-to-serialize-v-externalize-objects-in-java/#
+
+Transient vs static variables:
+-------------------------------
+Static variables do not belong to object, they belong to a class.  Hence static variables will not be serialized.
+
+Transient vs final variable:
+-----------------------------
+Though the variable is final, it still is part of an object.  Hence final variable will be serialized.
+
+Hence if a variable is non-static and not declared as transient, the variable is a good candidate for serilization.
+
+===========================================================================================================================================

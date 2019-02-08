@@ -1,0 +1,6 @@
+Object Cycling - - Rapid creation and deletion of objects in a short period of time. Results in tenuring short lived objects pre-maturely.
+
+Paging - Paging is a process of moving pages (block of data  )from RAM to disk to free memory on RAM for other  processes. By doing this, you can use more memory than it exists.  But the downfall is, more paging can cause performance degradation.
+
+http://learnloadrunner.com/introduction/memoryusage-cpuusage-paging-loadrunner/
+

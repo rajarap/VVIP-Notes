@@ -1,0 +1,7 @@
+Q. What is the difference between enum-Enum-Enumeration in  Java?
+Q. How many type of classes are there in Java?  Is enum a class in Java?
+Q. What modifiers are allowed for enum constants?
+Q. Where can a enum be declared, within the class or outside the class?  What modifiers are allowed if an enum is declared outside the class, if declared
+inside the class and if declared inside a method?
+Q. Can we use enum as arguments to switch statments?
+Q. 

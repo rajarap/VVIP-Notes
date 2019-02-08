@@ -1,0 +1,41 @@
+id
+name
+tagname
+classname
+linktext
+partiallinktext
+CSSselector
+XPath
+
+/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[1]/font[1]/b/a
+/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[1]/font[1]/b/a
+
+difference between selenium webdriver2 and webdriver3
+1. webdriver 3 - 
+
+- htmlunitdriver is not part of the selemium jar files
+- all drivers are now not given by selemiun. thats why FF gives gecko driver
+
+Core Java
+Python
+Django
+Django REST API
+Selenium 
+TestNG TDD
+Webservices testing - HttpClient / Rest Assured
+Cucumber BDD
+Performance Testing concepts
+Jmeter
+DB concepts
+DB commands
+
+
+Collections
+Exception handling 244/401  -  done
+Inner Classes 282/401
+Multithearding 110/401
+Regular Expressons 164/401 - done
+Strings - 319/401
+Wrapper Classes 341
+File io 364
+Serialization 388

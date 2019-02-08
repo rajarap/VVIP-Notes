@@ -1,0 +1,53 @@
+Property name								Overloading												Overridding
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Method names								1. must be same 										1. must be same
+2. Argument types							2. must be different(atleast order)						2. must be same (including order)
+3. method signatures						3. must be different									3. must be same
+4. return types								4. no restrictions, either same or different RT.		4. must be same till 1.4. from 1.5 co-variants are allowed
+5. private, static and final methods		5. can be overloaded									5. parent class private method not available to child
+																									   parent class static method in child is called method hiding
+																									   parent class final method not available to child
+																									   Hence none of them can be overridden in child class
+6. access modifiers(public,private,protec)	6. no restrictions can be overloaded					6. private < default < protected < public
+																									   while overidding we cannot reduce the access modifiers
+																									   You can increase but not decrease
+																									   if method in parent is public, child should be public only
+																									   if method in parent is default, child should be default/protecte/public
+																									   if method in parent is protected, child should be protected/public
+																									   if method is parent is private, not availabe to child.
+7. throws clause							7. no restrictions/contraints							7. if child class method throws any checked exception, parent should 
+																									   throw either same checked exception or its parent class exception.
+																									   No restrictions for un-checked exception.
+8. method resolution						8. method resolution is always taken care by 			8. method resolution is always taken care by JVM based on
+											   compiler based on reference type.					   runtime object.
+9. also known as							9. compile time/static polymorphism or early			9. runtime/dynamic polymorphism or late binding
+												binding.
+
+===============================================================================================================================================================================												
+												
+1. method overloading is done based on the reference type . It is also called compile time polymorphism or early binding or static polymorphism.
+2. method overriding is done based on the type of object referenced. It is called runtime polymorphism or late binding or dynamic polymorphism.
+3. instance methods can be overloaded in same class and overridden in child class.
+4. static methods can be overloaded but cannot be overridden in child class. When parent and child class have the same static method, it appears to be overridding
+but, it actually method hiding.  Method hiding applies to static and private methods.  You can define the same method name, arguments and modifiers in the child class.
+5. instance methods cannot be overridden as static in child class and static methods cannot be overridden as instance methods in child class.
+6. method overloading is based on method name and method signature. return type is not considered for overloaded methods.
+7. In method overidding the method name and signature should be same.  w.r.t return type, till 1.4, the overridden method return type should be same.  However,
+from 1.5, the return type may not be same, but should be a co-variant return type.  
+8. co-variant types are applicable only for Object types, but not for primitive types.
+9. If the parent class is an abstract class, then the methods should be overidden in the child class to provide implementation.
+10. We can override non-abstract methods in parent class as abstract methods in child class. Objective is to stop the availability of the parent method 
+implementation for the next level child class.
+11. Parent class private methods are not available to the child class and hence cant be overidden.
+12. Based on requirement, we can define exactly same private method in child class. It is valid and it is not overidding. Its called method hiding.
+13. While overridding, we cannot reduce the scope of the access modifier in the child class, but we can increase the scope. private < default < protected < public.
+14. Var-arg methods cannot be overridden with general methods. if var-arg method is overriden with general method, then it becomes overloading, not overridding.
+15. var-arg methods should only be overridden with another var-arg method. Parent and child class should be var-arg method only for overridding.
+16. Overidding concept is not applicable for variables. Variable resolution is always taken care by compiler based on reference type. runtime object does not
+play any role in variable resolution.
+17. Whether the variables are static or non-static there is no change in result.
+
+Note:
+1. In method overloading, we have to only check for same method name and different arguments.  All other checks like same return type, access modifiers, throws clause
+are not required to be checked.
+2. In method overidding, each and everything has to be checked.

@@ -1,0 +1,96 @@
+Singleton Classes: (part1 - 232)
+---------------------------
+1. For every java class if we are allowed to create only one object, such type of class is called "Singleton class".
+2. Main adv is : instead of creating seperate object for each requirement, we can create single object and use the same object for every requirement. 
+This improves memory utilization and system performance.
+
+
+Creating own Singleton class:
+--------------------------------
+1. We can create our own singleton class. For this, we have to use private constructor and factory method.
+2. Factory method:  By using class name, if we call any method and return same class object, then that method is called factory method.
+Eg: 
+		Runtime r = Runtime.getRuntime();
+		DateFormat df = DateFormat.getInstance();
+		SingletonClass sc = SingletonClass.getInstance();
+
+public class SingletonClass 
+{
+	public static SingletonClass sc;
+	
+	private static int x, y, z;
+	
+	private SingletonClass()
+	{
+		x = 10;
+		y = 20;
+		z = 30;
+	}
+	
+	public static SingletonClass getInstance()
+	{
+		if(sc == null)
+		{
+			sc = new SingletonClass();
+		}
+		
+		return sc;
+	}
+	
+	public Object clone()
+	{
+		return this;
+	}
+	
+	public static void main(String[] args)
+	{
+		SingletonClass sc1 = SingletonClass.getInstance();
+		SingletonClass sc2 = SingletonClass.getInstance();
+		SingletonClass sc3 = SingletonClass.getInstance();
+		SingletonClass sc4 = SingletonClass.getInstance();
+		
+		System.out.println(sc1.x);
+		System.out.println(sc2.x);
+		System.out.println(sc3.y);
+		System.out.println(sc4.y);
+		
+		x++;
+		y++;
+			
+		System.out.println(sc1.x);
+		System.out.println(sc2.x);
+		System.out.println(sc3.y);
+		System.out.println(sc4.y);
+		
+	}
+}
+
+3. Similarly, we can create doubleton, tripleton classes in java.
+
+public class DoubletonClass 
+{
+	public static DoubletonClass dc1;
+	public static DoubletonClass dc2;
+	
+	private static int x, y, z;
+	
+	private DoubletonClass()
+	{
+		x = 10;
+		y = 20;
+		z = 30;
+	}
+	
+	public static DoubletonClass getInstance()
+	{
+		if(dc1 == null)
+		{
+			dc1 = new DoubletonClass();
+			return dc1;
+		}
+		else if(dc2 == null)
+		{
+			dc2 = new DoubletonClass();
+			return dc2;
+		}
+	}

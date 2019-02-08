@@ -1,0 +1,22 @@
+Instance in Java:
+-----------------
+Process:  When ever we create an object the following sequence of events will be performed automatically:
+
+1. identification of all instance members of the class from top to bottom.
+2. Execution of all instance variable assignments and instance blocks from top to bottom.
+3. Execution of constructor method.
+
+Note:  Static control flow is only a one time activity which is performed at the time of class loading.   But instance control flow is not a one time activity.
+Based on the number of objects created, the instance flow control will be executed that many times for each object.
+
+
+When we create child class objects, the following process will be performed automatically:
+
+1. Identification of instance members from parent to child.
+2. Execution of instance variable assignments and instance blocks only in parent class.
+3. Execution of parent class constructor.
+4. Execution of instance variable assignments and instance blocks of child class.
+5. Execution of child class constructor.
+
+Refer part1 - pg: 225
+

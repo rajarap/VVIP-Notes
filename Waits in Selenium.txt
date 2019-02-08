@@ -1,0 +1,27 @@
+here there are two keywords: Present and visible.
+Web elements present on the page
+Web elements visible on the page
+
+Implicit wait:
+
+- implicit wait is a default timeout for all the driver.findElements commands.
+- waits till the time the element is present on the page.  Wether the element is visible or not visible, it is not concerned about that.
+
+
+Explicit wait:
+
+- Explicit wait waits for a particular web element to be visible on the page, not just be present on the page.
+- explicit wait is implemented in Selenium using the WebDriverWait class.  This class is a child class of Fluent Wait.
+- 
+
+
+
+
+
+Thread.sleep()
+implicit Wait
+Explicit Wait
+
+
+
+

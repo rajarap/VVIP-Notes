@@ -1,0 +1,749 @@
+Q. Definition of an array in Java?
+A.  
+1. An array is a indexed group of, fixed number of homogeneous data elements.
+2. Arrays support data elements of primitive type and Object type.
+3. An array can either hold primitive type or Object type, but not both in the same array. Collection classes only hold object type data, not primitive type.
+4. The data elements of an array can be obtained using the index of the array.
+5. To retrieve each data elements from the array, you can use looping controls like for loop or for-each loop.
+6. To find the length of an array use the 'length' variable of the Arrays class.
+7. The 'Arrays' class contains methods to manipulate a array.
+8. The toString() of Object class is not overriden in Arrays class. Hence toString() method will return the classname and hexadecimalhashcode of the array object.
+9. The equals() method of Object class is overriden in all Arrays class, String class, all wrapper classes and all collection classes.
+
+=================================================================================================================================================================
+Q. Ways to declare and define an array in Java?
+A.  An array is a indexed group of, fixed number of homogeneous data elements.
+Declaring an array:
+1. int[] a;  float[] f;  Student[] s; Integer[] a;
+
+Defining an array:
+1. int[] a= new int[5];
+2. Integer[] a = new Integer[10];
+3. int[] a = {10,20,30,40,50};
+
+=================================================================================================================================================================
+
+Q. Is array an object in Java?  If so pls explain?
+A. 
+
+int a;   # this declares a variable 'a' which is of tpye int.
+int a[]; # this declares a array variable 'a' which is of type int.  
+
+Then how do you say array is an object?
+
+Reason 1: Everything in Java is represented in form of Classes and Objects.
+Reason 2: Every array has a corresponding class in Java which is internally defined and not availabe to programmers.
+Eg: 
+int[] a = new int[3];  The corresponding class of this int array is [I@<hexadecimalhashcode>, which is returned by the toString() method of Object class.
+float[] b = new float[4]; The corresponding class of this int array is [F@<hexadecimalhashcode>.
+double[][] c = new double[3][];  The corresponding class of this int array is [[D@<hexadecimalhashcode>.
+
+Reason 3: Since every array has a corresponding class defined internally, we use the 'new' keyword to define the array and specify its size.
+
+Because of the above reasons, we can clearly say array is an object in Java.
+
+=================================================================================================================================================================
+
+Q. What are different operations you can perform on an array object?  Where are the methods defined for array operations?
+A.  We can perform the following operations on an array.
+
+binarySearch()
+equals()
+deepEquals()
+copyOf()
+copyOfRange()
+fill()
+hashCode()
+sort()
+parallelSort()
+toString()
+splitIterator()
+
+All the above methods are defined in the java.util.Arrays class.  This class contains various methods for manipulating arrays (such as sorting and searching).
+The methods in this class all throw a {@code NullPointerException}, if the specified array reference is null, except where noted.
+
+All the methods in the Arrays class are static.  So use the class name to invoke the methods in  Arrays class.
+
+=================================================================================================================================================================
+
+Q. What is the difference between equals(Object, Object) and deepEquals(Object, Object) methods in Arrays class?
+
+equals(Object, Object) - for normal arrays
+------------------------------------------
+Returns true if the two specified arrays of Objects are equal to one another. The two arrays are considered equal if both arrays contain the same number of 
+elements, in the same order, and all corresponding pairs of elements in the two arrays are equal. 
+Two objects 'e1' and 'e2' are considered equal if 
+(e1==null ? e2==null: e1.equals(e2)). In other words, the two arrays are equal if they contain the same elements in the same order. 
+Also, two array references are considered equal if both are null.
+
+deepEquals(Object, Object) - For nested arrays
+----------------------------------------------
+Returns true if the two specified arrays are deeply equal to one another. Unlike the equals(Object [], Object [])method, this method is 
+appropriate for use with nested arrays of arbitrary depth. 
+
+Two array references are considered deeply equal if both are null, or if they refer to arrays that contain the same number of elements and all 
+corresponding pairs of elements in the two arrays are deeply equal. 
+
+Two possibly null elements e1 and e2 are deeply equal if any of the following conditions hold: 
+• e1 and e2 are both arrays of object referencetypes, and Arrays.deepEquals(e1, e2) would return true 
+• e1 and e2 are arrays of the same primitivetype, and the appropriate overloading of Arrays.equals(e1, e2) would return true. 
+• e1 == e2 
+• e1.equals(e2) would return true. 
+
+Note that this definition permits null elements at any depth. 
+If either of the specified arrays contain themselves as elements either directly or indirectly through one or more levels of arrays,the behavior of this 
+method is undefined. 
+
+=================================================================================================================================================================
+
+Q. When or how do you say two array are equal?
+A.
+When comparing two arrays, do we check the equality using the equals() method defined in the Object class, or is the equals() method overriden?
+
+How exactly are arrays compared for equality, considering arrays are objects in java?
+
+Case 1: Using == operator. Reference variable comparison: Similar to creating two different objects.
+int[] a = new int[5];
+int[] b = new int[5];
+System.out.println(a==b);   returns false;
+
+Case 2: Using == operator.
+int[] a = new int[4];
+int[] b = a;
+System.out.println(a==b);   returns true, since both a and b are pointing to the same array object.
+
+Case 3: Using equals() method of Object class
+		int[] a = new int[5];
+		int[] b = new int[5];
+System.out.println(a.equals(b));  return false, as both a and b are pointing to two different array objects, though both are of same type and size.
+This will call the equals() method of the Object class.  The equals method of the object class will compare the two reference variables to check if they are 
+pointing to the same object or not.  .equals() method of Object class internally uses the == operator to compare the equality of two reference objects.
+
+Case 4: Using equals() method of Arrays class
+		int[] a = new int[3]; 
+		a[0] = 10;
+		a[1] = 20;
+		a[2] = 30;
+
+		int[] b = new int[3];
+		b[0] = 10;
+		b[1] = 20;
+		b[2] = 30;
+
+System.out.println(Arrays.equals(a, b));  return true.  The equals() method in Arrays class is a overriden method. hence the hashCode() method also should be 
+overriden.
+
+Case 5:
+		int[] s = {10,20};	  #this line is internally represented as int[] s = new int[2]; s[0] = 10; s[1] = 20;
+		int[] r = {10,20};
+		System.out.println(s);			#o/p is   [I@7852e922
+		System.out.println(r);  		#o/p is   [I@4e25154f
+		System.out.println(s==r);		#returns false as both array objects are created in different memory locations
+		System.out.println(s.equals(r));#returns false for the same reason as above.  Above using == operator, this line using equals() method of Object class.
+		System.out.println(Arrays.equals(s, r)); # returns true, as Arrays.equals() method compares the size and contents, not reference objects.
+
+The equals method of Arrays class will check for type, size and content for equality.
+This will call the equals() method of the Arrays class.  The equals method of the object class will compare the two arrays if they are pointing to the same memory
+location.  
+
+The equality is only w.r.t size and content matching.  Dimension of the array should by default be same. Same with type of array. Array with different 
+dimensions or different types cannot be compared. CE will be thrown.
+
+For two arrays to be equal, the parameters, "size" and "contents" should be same when using the Arrays.equals() for comparison.  The == operator and Object.equals()
+method are only for reference comparison.
+
+Case 6: What is the difference between the following arrays:
+
+		int[] a = {10, 20};
+		
+		int[] a = new int[2]; 
+		a[0] = 10; 
+		a[1] = 20;
+		
+		Integer[] a = new Integer[2]; 
+		a[0] = 10; 
+		a[1] = 20;
+		
+A. All the three arrays are same. These are different ways of declaring and defining arrays in Java.
+
+
+Case 7: Which two code fragments correctly create and initialize a static array of int elements? (Choose two.)
+
+A. static final int[] a = { 100,200 };
+B. static final int[] a;
+   static { a=new int[2]; a[0]=100; a[1]=200; }
+C. static final int[] a = new int[2]{ 100,200 };
+D. static final int[] a;
+   static void init() { a = new int[3]; a[0]=100; a[1]=200; }
+   
+The answer is A and B.  C is not the correct way to initialize an array.  D is not valid. Unless the init() method is called, the array will not be initialized.
+
+=================================================================================================================================================================
+Interview question:
+Are the above two arrays equal?  What parameters are used to find the equality? Since arrays are considered as objects, are they compared based on their
+reference variable, or based on the type of variable or based on the size of the array?
+=================================================================================================================================================================
+
+Q. Can you insert or delete a data element from an array?
+A.
+
+int a[] = new int[3];
+a[0] = 10;
+a[1] = 20;
+a[2] = 30;
+
+What will happen when I insert a data element at the end of the array?
+
+a[4] = 40; JVM will throw a RuntimeExcpetion:java.lang.ArrayIndexOutOfBoundsException.
+
+What will happen when i insert a data element in the middle of an array?
+
+a[1] = 50;  The previous value of a[1] which is 20, will be overriden with the new value 50.
+
+What will happen if i try to retrieve the 6 data element from the array?
+
+int a = a[6];  JVM will throw a RuntimeExcpetion:java.lang.ArrayIndexOutOfBoundsException.
+
+=================================================================================================================================================================
+
+Q. When should the array size be provided in an array?
+A.  
+Declaring an array - int[] a;  int[][] a;   int[] []a;  int[] a[][];
+Defining an array - int[] a = new[3]; int[][] a = new int[3][];  int[] a[][] = new int[3][][];
+
+The array size should be provided only when defining the array.  Not when declaring the array.  Also its legal to declare an array of size '0'.
+int[] a = new int[0];
+
+If a negative number is provided as size to an array, JVM will throw runtime exception: NegativeArraySizeException.
+int[] a = new int[-1];
+
+The following datatypes can be used to specify the size of an array - byte->short->int and char.  If any other datatypes (long->float->double) are used 
+to define the size of an array, compile time exception will be thrown.
+
+byte b = 20;
+int[] a = new int[b];
+
+int[] b = new int['a'];  char 'a' returns the UNICODE value of 'a' which is 97.
+
+short s = 30;
+int[] c = new int[s];
+
+int[] a = new int[10f];  #throws CE:
+int[] b = new int[20l];  #throws CE:
+
+Hence the maximum size allowed for an array depends on the maximum range of the int datatype which is 2147483647.
+
+=================================================================================================================================================================
+Q. How to you declare, construct and initialize an array in one line?
+A:
+
+Multi-line:
+-----------
+int[] a;
+a = new int[3];
+a[0] = 10;
+a[1] = 20;
+a[2] = 30;
+
+Single line:
+-------------
+int[] a = {10, 20, 30};
+String[] s = {"Hello", "Java", "World"};
+char[] c = {'a', 'e', 'i', 'o', 'u'};
+
+
+Note: If you dont specify the values of a array, JVM will assign default values to the array based on the array type.
+
+int[] a = new int[3];  #JVM will provide default values as follows:
+System.out.println(a[0]); will return '0'. 
+
+		String[] str = new String[3];
+		System.out.println(str[0]);    #returns 'null'
+		System.out.println(str);	   #returns [Ljava.lang.String;@7852e922
+
+* For int array '0' will be assigned for each data element by default.
+* for String array "null" will be assigned for each data  element by default.
+
+=================================================================================================================================================================
+Q. Difference between length variable and length() method?
+A. 
+'length' is declared in the Arrays class as a final variable to find the length of an array.
+For single dimension array, length variable returns the length(number of data elements in the array).
+For multi-dimensional array, length variable returns only the length of the base array.  Eg: int[][] a = new int[2][3]; length returns the value 2. not 3.
+To find the length of 1D array a.length
+To find the length of 2D array, a[0].length
+To find the length of 3D array, a[0][0].length
+
+length() method is declared in the String class as final method to return the length of the string.
+
+Eg: 
+int[] a = {10, 20, 30};
+System.out.println(a.length);  #returns 3
+
+int[][] b = {{10,20,30}, {40, 50, 60}};
+System.out.println(b.length);  #returns 3
+
+String s = "Hello Java";
+System.out.println(s.length());  #returns the number of characters in "Hello Java" which is 7.
+System.out.println(s.length);    #throws compile time exception.
+
+
+=================================================================================================================================================================
+
+Q. Rules for assigning data elements to arrays: Follows the widening principle - Implicit type conversion.
+
+1. For primitive type arrays, the data elements can be of any type which can be promoted to declared type.
+Eg: 
+* int type array can hold data elements of type byte, short, char, int.  But not long, float, double as the declared type is int.
+* float type array can hold data elements of type byte, short, char, int, long, float, but not double, as the declared type is float.
+
+Eg: int[] a = new int[5];  
+
+Array 'a' can contain data elements of type byte, short, char, int.   If we provide any other type, we will get CE:.
+
+2. For object type arrays, the data elements can contain objects of the declared type or its child classes.
+Eg:
+* Number class array can contain objects of Number class or any of the Number classes child objects.
+
+Eg: Number[] num = new Number[4];
+	num[0] = new Number(100);
+	num[1] = new Integer(10);
+	num[2] = new Double(10.5);
+	num[3] = new String("Java"); #this will throw CE: as String class is not the child of Number class.	
+
+Eg: Object[] o = new Object[4];
+	o[0] = new Number(100);
+	o[1] = new Integer(10);
+	o[2] = new Double(10.5);
+	0[3] = new String("Java"); 	
+
+Since all classes in Java are child classes of Object class, we can store objects of any class in the Object array 'o'.
+
+3. If the array is of any Abstract class type, then the data elements of the array can contain only object of any concrete child class of the Abstrat class, 
+which fully implements the methods of the Abstract class.
+
+public abstract class Animal
+{
+	public abstract void m1();
+	public abstract void m2();
+}
+public class Dog extends Animal
+{
+	public void m1()
+	{
+		System.out.println(m1());	
+	}
+	
+	public void m2()
+	{
+		System.out.println(m2());	
+	}
+}
+
+public class Deer extends Animal
+{
+	public void m1()
+	{
+		System.out.println(m1());	
+	}
+	
+	public void m2()
+	{
+		System.out.println(m2());	
+	}
+}
+
+Animal class is abstract class.  Dog and Deer class extends Animal class and have implemented all the methods of Animal class.  
+If the child class is also abstract, then you cannot create object of that child class.
+
+Animal[] mal = new Animal[3];
+mal[0] = new Dog();
+mal[1] = new Deer();
+mal[2] = new Animal();  #throw CE: error as you cannot create object of Abstract class Animal.
+
+
+4. If the array is of Interface type, then the data elements of the array can contain only object of class that implements that interface.
+Eg:
+public interface Car
+{
+	public void wheels();
+	public void seats();
+	public void engine();
+}
+
+public class Swift implements Car
+{
+	public void wheels()
+	{
+		System.out.println(wheels());
+	}
+
+	public void seats()
+	{
+		System.out.println(seats());
+	}
+	
+	public void engine()
+	{
+		System.out.println(engine());
+	}
+}
+
+public class Nexus implements Car
+{
+	public void wheels()
+	{
+		System.out.println(wheels());
+	}
+
+	public void seats()
+	{
+		System.out.println(seats());
+	}
+	
+	public void engine()
+	{
+		System.out.println(engine());
+	}
+}
+
+Car is an interface which is implemented by Swift and Nexus classes.
+
+Eg: Car[] c = new Car[3];
+	c[0] = new Swift();
+	c[1] = new Nexus();
+	c[2] = new i10grand(); #throws CE. as i10grand() does  not implement Car interface.
+	
+To summarize:
+
+primitive type array  - can contain data elements of declared type and any type that can be promoted to the declared type.
+concrete class array  - can contain data elements of declared class and any of the child class objects of the declared class.
+abstract class array  - can contain data elements of any of the child class objects extending the abstratct class.
+interface array       - can contain data elements of any of the implementation class objects.
+
+=================================================================================================================================================================
+Q. Rules to be followed when assiging one array variable to another.  Name, type and dimension of an array.
+
+1. Widening is allowed only for array data elements, not for the array itself.  That is, an array of type byte cannot be promoted to array of type short or type int.
+Eg: int[] a = {10,20,30};
+	char[] ch = {'a', 'e', 'i', 'o', 'u'};
+	
+	int[] b = a ;  # assigning an int array 'a' to another int array 'b' is allowed.
+	int[] c = ch;  # assigning an character array 'ch' to an int array 'c' is not allowed.  Widening is not applicable at array level.
+	
+char to int  		# data element promotion  allowed.
+char[] to int[]		# array level promotions not allowed
+int to long			# data element promotion  allowed.
+long to double		# data element promotion  allowed.
+double to long		# narrowing data element demotion  not allowed.
+long[] to double[]	# array level promotions not allowed
+short[] to int[]	# array level promotions not allowed
+
+2. Child type array can be assigned to parent type array variable.
+Eg: 
+	String[] str = {"Hello", "JVM"};
+	Object[] obj = str;
+
+3. When assigning one array to another, only the reference variable are assigned, but not the underlining data elements.
+Eg: 
+	int[] a = {10,20,30,40,50};
+	int[] b = {10,20,30};
+	a = b;
+	b = a;
+	
+Now array 'a' will point to {10,20,30} and array 'b' will point to {10,20,30,40,50}.  
+Also, the size of the array does not matter when assiging one array to another.  Only what matter is type of array. It must be same..
+
+4. Also when assiging one array to another, the dimensions of both the arrays should match. Otherwise CE: error will be thrown.
+Eg:
+
+int[][] a = new int[3][];
+a[0] = new int[3];
+a[1] = new int[1];
+a[2] = new int[2][3];  #throws CE: as the dimensions dont match.
+
+=================================================================================================================================================================
+Q. Where are promotions allowed in arrays?
+
+A. Promotions are performed at array level and at data element level as follows:
+
+Primitive type array:
+						- Promotions are not allowed at array level.
+						- Promotions are only allowed at data element level.
+
+Object type array:
+						- Promotions are allowed at array level.
+						- Promotions are allowed at data element level.
+
+=================================================================================================================================================================
+
+Q. Points to remember in arrays:
+
+1. For multi-dimensional arrays, you can specify the dimension only before the first variable. If you specify the dimension before the second variable then
+CE: will be thrown.  You can specify the dimension after the second variable.
+Eg: 
+int[] []a,b; <-allowed 
+int[] []a, b[]; <-allowed   
+int[] []a,[]b; <-this is not allowed
+
+2. Never set the size of an array during declaration.  
+Eg: int[3] a;  double[3][] d;   #this will throw compile time exception.
+
+3. When you print a reference variable, internally the Object.toString() method will be called which will print the classname@hexadecimalhashcode.
+In case of arrays also, when you print an array reference variable, the Object.toString() method will be called internally.
+In case of primitive type arrays, the Object.toString() method will return [I@<hexadecimalhashcode>.
+In case the array type is a concrete class like String, Integer, Byte, Short etc, the Object.toString() method will 
+return [Ljava.lang.String;@<hexadecimalhashcode> for String class.
+
+[ - denotes single dimension array.  This is followed by L, followed by package name, then semicolon ;@ <hexadecimalhashcode>.
+
+3. All methods in the Arrays class are static and takes only single dimension arrays as arguments.  Eg: You cannot call the sort method on two dimensional array.
+
+4. To find the length of the 2 dimensional array:
+
+		int[][] m = {{10,20,30}, {40, 50, 60}, {70, 80}};
+		System.out.println(m.length);     #o/p: 3
+		System.out.println(m[0].length);  #o/p: 3
+		System.out.println(m[1].length);  #o/p: 3
+		System.out.println(m[2].length);  #o/p: 2
+
+5. An array without a name is called annonymous array.  This type of array is created for instant use.  When creating an annonymous array,
+the array should not have a name or size.  
+
+Eg: 	new int[]{10, 20, 30}
+
+You dont have to declare the array and then initialize it.  If you declare an array you have to provide a name.  Hence u dont declare annonymous arrays nor you
+specify the size.
+
+Eg: 	new int[3]{50, 60, 70} --- this will throw CE:. Don't specify the size.
+
+		sum(new int[]{10, 20, 30});
+		
+		public void sum(int[] a)
+		{
+			//now array 'a' is pointing to the annonymous array containing data elements {10, 20, 30}
+			//use foreach loop to retrieve each array elements and add to find the sum.
+		}
+
+To find the length of annonymous array:
+	
+		System.out.println(new int[]{10,20,30,40,50,60,70,80}.length);	# returns 8
+
+6. The only way to retrieve the values of the annonymous array is to pass it as an arguments to a method and use it as regular array as 
+specified in point 5, second example.
+
+=================================================================================================================================================================
+
+Q. Variables in Java.
+
+1. Based on the type of value represented by a variable, variables are divided into two types: Primitive type and Reference type.
+2. Based on the purpose and position of declaration, variables are divided into three types: instance variables, static variables and local variables.
+
+Instance Variables:
+--------------------
+* If the value of a variable varies from object to object such type of variable is called as instance variable.
+* For each object, a seperate copy of instance variable will be created.
+* Scope of instance variables is same as the scope of an object. Instance variables will be created at the time of object creation and destroyed when object is destroyed.
+* Instance variables should be declared within the class directly, but outside any method, block or constructor.
+* Instance variables cannot be accessed by static area directly.  It has  to accessed only using reference variable.
+* From instance area we can  directly access instance variables.
+* Explicit initialization of instance variables is not requried.  JVM will automatically provide default values based on the type of instance variable.
+* Instance variables are also known as object level variables or attributes.
+
+Static Variables:
+--------------------
+* If the value of a variable does not vary from object to object, then it is not recommended to declare that variable at Object level. Such variables have 
+to be declared at class level by using static modifier.
+* In case of instance variables, for every object a seperate copy must be created. But in case of static variables, a single copy of the variable
+will be created at class level and the copy will be shared by all objects of that class.
+* Static variables will be created at the time of class loading and destroyed at the time of class unloading. Hence the scope of static variable is
+exacly same as scope of the class.
+* Static varibles should be declared within the class directly, but outside any method, block or constructor, with static modifier.
+* Static variables can be accessed either by using the class name or by using object reference. class name is recommended.
+* Since static variables are created at the time of class loading, they can be accessed from both instance and static areas directly.
+* Just like instance variables, static variables need not be initiliazed.  JVM will provide default values.
+* Static variables will be stored in method-area. Hence known as "Class level" variables or fields.
+* If any changes are made to instance variables, they will not be reflected in all the objects, as every object has a seperate copy of the instance
+variable.
+* If any changes are made to static variables, the changes will be reflected in all the objects as only a single copy is maintained.  
+
+Local Variables:
+--------------------
+* To meet temperory requirements sometime we have to create variables inside a method, block or constructor. Such variables are called as 
+local variables. Local variables are also known  as stack variables, automatic variables or temperory variables.
+* Local variables will be stored inside a stack.
+* Local variables are created while executing a block in which it is declared and destroyed once the block is completed.  Hence scope of local
+variable is exactly same as the block in which it is declared.
+* Local variables are not initialized with default values by JVM. We have to explicity initialize local variables before using them.
+* Local variables should be initialized at the time of declaration only, atleast with defualt values.
+* The only applicable modifier for local variables is "final". If any other modifier is used we will get compilie time error.
+
+- Static variables can be accessed from anywhere in the class. It can be accessed from static area or from instance area directly.
+- Instance variables can be accessed from only instance areas in the class like instance block, constructors, non-static methods.
+- If instance variables are accessed from static areas, then they can only be accessed using the object of the class or classname.
+  They cannot be accessed directly.
+  
+  public class VariableTypes 
+{
+	int i;
+	String str;
+	long l;
+	float f;
+	double d;
+	int[] a = new int[3];
+	static int j;
+	
+	public void method1()
+	{
+		System.out.println("i = " + i);
+		System.out.println("str = " + str);
+		System.out.println("l = " + l);
+		System.out.println("f = " + f);
+		System.out.println("d = " + d);
+		System.out.println("a[0] = " + a[0]);
+		System.out.println("j = " + j);
+	}
+	
+	{
+		System.out.println("Before instance block ");
+		a[0] = 1;
+		j = 500;
+		System.out.println("After instance block ");
+	}
+
+	VariableTypes()
+	{
+		i = 10;
+		str = "Hello Java";
+		l = 300l;
+		f = 60.0f;
+		d = 7293.23423d;
+		System.out.println("Inside constructor");
+	}
+	
+	public static void main(String[] args)
+	{
+		VariableTypes vt = new VariableTypes();
+		vt.method1();
+	}
+}
+
+=================================================================================================================================================================
+
+Q. What will happen if an array is not initialized?
+A.
+Assume, if an array is just declared but not initialized. If this array is accessed, what will be the result!!
+
+Eg:  
+array declared in instance area:           int[] arr;
+array declared in instance area can only be accessed using a reference variable from a static area.
+
+public class ArrayVariables 
+{
+	int[] arr ;			# array declared in instance area.
+	
+	public static void main(String args[])
+	{
+		ArrayVariables av = new ArrayVariables();
+		System.out.println(av.arr);					#prints null
+		System.out.println(av.arr[0]);				#throws NullPointerException.
+		
+		int[] b = new int[3];		#declare an array and create an array object using the "new" keyword.  JVM creates an array object and initializes with default values.
+		System.out.println(b[0]);	#prints the default value assigned to b[0], which is int zero '0' as the array is of type int.
+	}
+
+}
+
+public class ArrayVariables 
+{
+	static int[] arr ;			# array declared as static.
+	
+	public static void main(String args[])
+	{
+		ArrayVariables av = new ArrayVariables();
+		System.out.println(arr);				#static array can be called from static method directly without using reference variable.  prints null
+		System.out.println(arr[0]);				#throws NullPointerException.
+		
+		int[] b = new int[3];		#local arrays/variables cannot be declared as static.  They can only be declared as final.  no other modifier can be used locally.
+		System.out.println(b[0]);	#prints the default value assigned to b[0], which is int zero '0' as the array is of type int.
+	}
+
+}
+
+Note: Once an array object is created, it is initialized with default values irrespective of whether it is static, local or instance array.
+
+=================================================================================================================================================================
+Q. What is meant by var-arg methods? Explain in detail?
+A. Declaring a method which can take variable number of arguments of same type based on requirements is called var-arg method.  In method overloading, 
+we have to provide multiple methods with same name but take different number of arguments.  This increases the length of the code and reduces readability.  
+If you want to write a single method which can take variable number of, same type of arguments as per requirement, we have to use var-arg methods.  
+This method was introduced in 1.5.
+
+Syntax:     methodname(int... a)            Eg: sum(int... a)
+We can call the sum() method and pass any number of int values, including 0. sum(10,20),  sum(10,20,30,40,50), sum(1,1,1,1) etc
+
+Note: Internally var-arg method is implemented as single dimension array.
+sum(10,20) will be implemented as int[] sum = {10, 20};  hence within the var-arg method, each argument can be differentiated using an index.
+
+Eg: 
+public class ArrayVariables 
+{
+
+	public static void main(String args[])
+	{
+		ArrayVariables av = new ArrayVariables();
+		av.sum(10);										
+		av.sum(10, 20);
+		av.sum(10,30,20,40,50);
+	}
+	
+	public void sum(int... a)
+	{
+		int total = 0;
+		for(int i : a)
+		{
+			total = total + i;
+		}
+		System.out.println("Sum is : " + total);
+	}
+}
+
+o/p:  Sum is : 10
+	  Sum is : 30
+	  Sum is : 150
+
+
+	  
+Rules:
+
+1. Valid and invalid declarations of var-arg methods:
+
+Valid declarations: 
+					sum(int... a);
+					sum(int ...a);
+
+Invalid declarations:
+					sum(int a...);
+					sum(int. ..a);
+					sum(int .a..);
+				
+2. We can mix var-arg methods with normal parameters too.  Eg: sum(long x, float y, int... a).
+3. If you mix var-arg methods with normal parameters, then the var-arg parameter should be declared as the last parameter.
+4. A var-arg method, must take only one var-arg parameter.  It should not take more that one var-arg parameter.
+5. In general, var-arg methods will get least priority.  Only if no other methods match, var-arg method will be executed.
+6. since var-arg methods are internally implemented as single dimension array, you cannot declare a method to take single dim array and another var-arg parameter
+in the same class.
+Eg: Below declarations are not allowed in same class:
+
+public void sum(int[] a);
+public void sum(int... a);
+		or
+public void sum(int[] a, int... a);
+
+7. Where ever single dimension array are present, we can replace it with var-arg method.  however, where ever var-arg methods are present, we cannot replace it
+with single dimension array.
+
+sum(int[] a) can be replaced with sum(int... a); but
+sum(int... a) cannot be replaced with sum(int[] a), as internally sum(int... a) is implemented as sum(int[] a).
+
+=================================================================================================================================================================

@@ -1,0 +1,25 @@
+Q. What is garbage collection? Who is responsible for garbage collection?
+Q. How do you make a object eligible for garbage collection?
+Q. When is an object eligible for garbage collection? Is it eligible only when you assign null to the reference variable?
+Q. What is meant by island of isolation in Java?
+Q. Who is incharge of initiating GC? When exactly is GC initiated?
+Q. Can GC be programatically invoked? If yes, how is it done?
+Q. How many ways can you invoke GC thru your code?
+Q. What is the need for finalize() method?  Who calls the finalize() method and when?
+Q. Can we call the finalize() method programatically?  Will the object be destroyed if we do so?
+Q. When the finalize() method is called and when it throws any exception, what will be the outcome of the program?
+Q. Generally which algorithm is followed by GC?
+
+Q. Which of the following is True?
+1. While executing the finalize() method, all exceptions are ignored by JVM.
+2. While executing the finalize() method, only uncaught exceptions are ignored by JVM.
+
+A. 1. False,  2. True.
+
+Q. Which of the following is the right way to request JVM for GC?
+1. System.gc();
+2. Runtime.gc();
+3. (new Runtime()).gc()
+4. Runtime.getRunTime().gc();
+
+A.  1 and 4 are right way to request JVM for GC.

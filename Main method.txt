@@ -1,0 +1,46 @@
+Main method in Java
+===================
+
+main() method:
+
+1. Whether the main method is present in a java class or not, whether it is properly declared or not these checks are not the responsiblity of the java compiler.
+These checkings are the responsiblity of the JVM.  If JVM is unable to find the main() method, then JVM is simply throw a runtime exception NoSuchMethodError:main()
+
+JVM will always search for the main method when you execute a java program.  It searches for the main  method with the following signature:
+
+public static void main(String args[])
+
+public - main() method is declared as public, so that it can be called from outside the class from anywhere, where JVM is installed. The caller is the JVM.
+static - since main() method is the entry point or the first method to be executed by JVM, it cannot create the object of the class and call the main method. Main
+method has to be called by JVM directly before creating any object.
+void - if main method returns anything, it will only be returned to the JVM and not to any other method which can use the returned value. Hence main method does 
+not return any value.
+main - name of method which is configured in JVM.  JVM will not look for any other method. If you change this name, then JVM has to be customized to identify that name.
+String[] args - this array stores any command line arguments passed when executing the java program.
+
+Note:  JVM will only look for the main method with above signature and modifiers.  If there is any change in the modifiers or signature of main method, then
+JVM is simply throw a runtime exception NoSuchMethodError:main()
+
+However, the following changes are acceptable:
+
+1. interchanging of modifiers.  Instead of public static, you can specify static public.
+2. String[] args can be declared as String []args or String args[].
+3. Instead of args, we can specify any array name.
+4. Instead of String[], we can specify var-arg string parameter. main(String[] args) can be specified as  main(String... args).
+5. main method can also be declared with modifiers like synchronized, strictfp, and final.
+
+final synchronized strictfp public static void main(String... args)
+
+Valid and invalid combinations of main method declarations:
+
+1. public static void main(String args)     						# invalid - main method takes String array not String variable
+2. public static int main(String[] args)							# invalid - main method does not return any value
+3. public static void Main(String[] args)							# invalid - main method is lower case
+4. static public void final main(String[] args)						# valid 
+5. final public static strictfp synchronized void main(String... a)	# valid 
+
+Q. In which of the above cases we will ge compile time error?
+A. The first point mentioned above says, the main() method is the responsibility of the JVM. JVM throws only Runtime exception. Hence, for all the above cases
+compile time error will not be thrown. All cases will compile.
+
+

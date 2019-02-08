@@ -1,0 +1,64 @@
+@BeforeSuite
+@BeforeTest
+@BeforeClass
+
+@BeforeMethod
+	@Test
+@AfterMethod
+
+@BeforeMethod
+	@Test
+@AfterMethod
+
+@BeforeMethod
+	@Test
+@AfterMethod
+
+
+@AfterClass
+@AfterTest
+@AfterSuite
+=======================================================
+
+@Test(priority=1)
+@Test(groups="Regression")
+@Test(dependsOnMethods="methodname")
+@Test(dataprovider = "methodname") /  @DataProvider
+@Parameters({"url", "emailid"})
+@Test(retryAnalyzer = test.ng.ReExecute.class) - drawback is, this annotation should be applied to each and every @Test in the class.  If there are 100 test cases then you have to mention 100 times.
+
+@Test(invocationCount=10)
+@Test(timeOut=30000) - 30 seconds for the test to execute. Later timeouts or terminates
+@Test(invocationTimeOut=2000) - 2 seconds
+@Test(expectedExceptions=ArryaIndexOutOfBound.class, NumberFormatExceptions.class)
+
+
+To re-execute the failed test cases once more to be sure, the following methods can be used:
+
+1. @Test level  - using IRetryAnalyzer - - > Testng Listerner
+2. At runtime
+
+
+latency
+firewalls
+
+C:\Program Files\Java\jdk1.8.0_121\bin
+
+http://127.0.0.1:9990/management
+
+MSSQLSERVER
+sqlserver
+
+
+1. Create a class which implements the IRetryAnalyser
+2. define a counter and retry method ->how many times the failed cases should be re-tested.
+
+
+
+
+
+
+
+
+
+

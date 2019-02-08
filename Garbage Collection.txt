@@ -1,0 +1,185 @@
+Garbage Collection (GC):
+-----------------------
+
+1. In languages like C, C++, creation and destruction of objects is the responsiblity of the developer.
+2. In Java, developer is only responsible for creating objects, not destroying it.
+3. Java provides a component, which always run in the background, and is responsible for destroying useless objects.  Due to this component, chances of a
+java program failing due to memory problem is rare.
+4. This component is called "Garbage Collector".  Its main objective is to destroy useless objects.
+
+Ways to make an object eligible for GC:
+----------------------------------------
+* Though the developer is not responsible for destroying useless objects, its always a good practice to make an object eligible for GC if no longer required.
+* An object is said to be eligible for GC, if it does not contain any references.
+
+The ways to make an object eligible for GC are:
+
+1. Nullying the reference variable:
+
+If an object is no longer required, then assign 'null' to its references.  The object will automatically be eligible for GC.
+Eg:
+	Student s1 = new Student();
+	Student s2 = new Student();
+	.
+	.
+	.
+	Student s50 = new Student();
+
+	s2 = null;     # s2 eligible for GC.
+	s45 = null;    # s45 eligible for GC.
+	
+
+2. Island of Isolation:  (https://www.geeksforgeeks.org/island-of-isolation-in-java/)
+
+In java, object destruction is taken care by the Garbage Collector module and the objects which do not have any references are eligible for garbage collection. 
+Garbage Collector is capable to identify these types of objects.
+
+If Object1 references Object2 and Object2 references Object1. Neither Object1 nor Object2 is referenced by any other object. That’s an island of isolation.
+Basically, an island of isolation is a group of objects that reference each other but they are not referenced by any other active object in the application. 
+Strictly speaking, even a single unreferenced object is an island of isolation too.
+
+Note: 
+* If an object does not have any reference, then it is always eligible for GC.
+* Even though an object has the reference, still it is eligible for GC sometimes if island of isolation occurs.
+
+Methods for requesting JVM to run GC:
+----------------------------------------
+
+* When we nullify a reference object or when island of isolation occurs, GC may not destroy it immeiately.  Whenever JVM runs the GC, only then the objects
+will be destroyed.  We will not know exactly when GC will be executed by JVM.
+* Hence, we can request JVM to run GC programatically.  But there is no gaurantee whether JVM will accept our request or not.
+
+We can request JVM to run GC in the following ways:
+
+1. By using System class:
+'System' class contains a static method to request JVM to run the GC:    Eg: System.gc();
+
+2. By using Runtime class:
+* By using a runtime object, a java application can communicate with the JVM.
+* Runtime class is a singleton class, hence we cannot create runtime object using the constructor.
+* Runtime object can only be created using the factory method getRunTime().							Eg. Runtime r = Runtime.getRunTime();
+* Using the runtime object we can call the following methods on it:
+	a. freeMemory() - frees up the memory in  the heap.
+	b. totalMemory() - returns the total memory in the heap (heap size)
+	c. gc()  - requesting JVM to run GC.
+	
+Eg:
+
+public class RuntimeClass 
+{
+	public static void main(String[] args) 
+	{
+		Runtime r = Runtime.getRuntime();
+		System.out.println(r.totalMemory());
+		r.gc();
+		r.freeMemory();
+		System.out.println(r.totalMemory());
+	}
+}
+
+Q. Which of the following is the right way to request JVM for GC?
+1. System.gc();
+2. Runtime.gc();
+3. (new Runtime()).gc()
+4. Runtime.getRunTime().gc();
+
+A.  1 and 4 are right way to request JVM for GC.
+
+Note: 
+1. gc() method present in 'System' class is a static method.   gc() method present in 'Runtime' class is an instance method.  
+2. Recommended to use System.gc().
+
+finalization:
+-------------
+
+1. Before destroying any object, GC will call the finalize method to perform clean-up activities on that object.
+2. finalize() method is declared in the Object class as -  protected void finalize() throws throwable.
+
+Note: GC will call finalize() method on the object which is eligible for GC, just before destroying the object.
+
+public class Garbage 
+{
+	public static void main(String[] args) 
+	{
+		TestFinalize t1 = new TestFinalize(101, "AAA");
+		TestFinalize t2 = new TestFinalize(102, "BBB");
+		System.out.println("Before GC in Test");
+		t1.display();
+		t2.display();
+		t1 = null;
+		t2 = null;
+		System.gc();
+		System.out.println("After GC in Test");
+	}
+	
+	public void finalize()
+	{
+		System.out.println("finalize() called - Cleaning up....!!");
+	}
+}
+
+class TestFinalize
+{
+	public int rollno;
+	public String name;
+	
+	TestFinalize(int r, String s)
+	{
+		this.rollno = r;
+		this.name = s;
+	}
+	
+	public void display()
+	{
+		System.out.println("Rollno : " + rollno);
+		System.out.println("Name : " + name);
+	}
+}
+
+3. You can call the finalize() method anytime in your code, just like a normal method call. The object wont be destroyed.
+4. But, GC will always call the finalize() method only before destroying an object.
+5. On any object, GC calls the finalize() method only once.
+
+public class Garbage 
+{
+	public static void main(String[] args) 
+	{
+		TestFinalize t1 = new TestFinalize(101, "AAA");
+		TestFinalize t2 = new TestFinalize(102, "BBB");
+		System.out.println("Before GC in Test");
+		t1.display();
+		t2.display();
+		t1.finalize();
+		t2.finalize();
+		t1 = null;
+		t2 = null;
+		System.gc();
+		System.out.println("After GC in Test");
+	}
+	
+	public void finalize()
+	{
+		System.out.println("finalize() called - Cleaning up....!!");
+	}
+}
+
+5. If we call finalize() method explicitly in our code, and while executing the finalize() method, if an exception occurs and is uncaught, then just like normal
+program flow, when an excpetion occurs, the program terminates.
+6. When GC calls the finalize() method before destroying an object, and while executing the finalize() method, if an exception occurs and is uncaught(no try-catch)
+JVM will simply ignore the exception and continues executing the rest of the program normally as if no exception occured.
+
+Q. Which of the following is True?
+1. While executing the finalize() method, all exceptions are ignored by JVM.
+2. While executing the finalize() method, only uncaught exceptions are ignored by JVM.
+
+A. 1. False,  2. True.
+
+7. The behaviour of GC is vendor specify. Oracle Java GC may function differently from IBM Java GC.  Hence it is difficult to exactly say when 
+GC is invoked by JVM, which algorithm is followed by GC, in which order does GC destroy objects etc.
+8. Though exactly we wont know which algorithm is followed, generally in most cases GC follows "Mark and Sweep" algorithm.
+
+Memory Leak:
+-------------
+* If an object is having a reference, then it is not eligible for GC.  Even though that object is not used in the program, it does not get destroyed by GC.
+Such type of objects cause memory leak, buy simply occupying memory space in the heap.  
+* We can resolve such issues by programatically calling the GC -  System.gc().

@@ -1,0 +1,454 @@
+Inner Classes in Java:
+-----------------------
+
+1. A class inside another class is called as inner class.
+2. The class containing the innner class is called as outer class.
+
+Eg: 
+1. Without existing Car object, Wheel object or Seat object wont exist.  In such cases we should go for Inner class.  We have to declare Wheel class and Seat
+class as inner classes of Car object.
+
+class Car
+{
+	class Wheel
+	{
+	
+	}
+	
+	class Seat
+	{
+	
+	}
+}
+
+2. Without existing Bank object, account object wont exist.  Then we have to define account class as inner class of Bank class.
+
+class Bank
+{
+	class Account
+	{
+	
+	}
+}
+
+3. A map is a collection of key-value pairs.  Each key-value pair is called a Entry.  Without existing map object, entry object wont exist. Hence Entry interface
+will become inner interface of Map interface.
+
+interface Map
+{
+	interface Entry
+	{
+	
+	}
+	
+}
+
+Note: The relationship between outer class and inner class is not a parent-child relationship(IS-A).  It is infact HAS-A relationship.
+
+Based on the purpose and position  of declaration, inner classes are divided into 4 types:
+
+1. Normal or Regular inner classes
+2. Static Nested inner classes 
+3. Method local inner class
+4. Annoymous inner class  (without class name)
+
+
+Note:  From  static nested class, we can only access static members of the outer class.   Normal inner class can access both static and non-static members of the 
+outer class directly.
+
+
+Normal Inner Class
+-------------------
+If a named class is declared within another class without static modifier, such type of class is called as Normal Inner class.
+
+class Bank
+{
+	class Account
+	{
+	
+	}
+}
+
+When you compile the above code, two .class files will be generated. One is Bank.class and other is Account.class.
+When you run the program, 
+
+>java Bank -> will throw RE: Main method not present
+>java Bank$Account -> will throw RE: Main method not present
+
+1. Inside the inner class, we cannot declare static members.  Hence we cannot declare a static main method within inner class and hence we cannot invoke an 
+inner class from command prompt. 
+2. A normal Inner classes must not contain any static members.  
+3. A normal Inner class must not contain the main method.
+
+public class Bank 
+{
+	class Account
+	{
+		public static void main(String[] args) 
+		{
+			System.out.println("Inside Account class - main method");
+		}
+		public void main()
+		{
+			System.out.println("Inside Account class - main method");
+		}
+	}
+}
+o/p: Error: Main method not found in class com.gazt.utilities.Bank, please define the main method as:   public static void main(String[] args)
+
+Consider a normal inner class as just another member of a class like a variable, method or constructor.  We cannot declare main method within another method
+or constructor right. Same applies to inner classes too.
+
+Accessing Inner class code from static area of outer class:
+-----------------------------------------------------------
+
+public class Bank 
+{
+	public static void main(String[] args) 
+	{
+		System.out.println("Inside Account class - main method");
+		Bank b = new Bank();
+		b.display();      		// to call the display() of Bank class
+		
+		Bank.Account acc;  		//create a reference variable for inner class 'Account' identified by outer class
+		
+		acc = b.new Account(); 	//create a object of inner class and assign it to the inner class reference variable acc
+								// Bank.Account acc = new Bank().new Account();
+		acc.m1(); 				// calling the m1() method of inner class using the reference variable of Bank.Account class from static area of outer class.
+	}
+	public void display()
+	{
+		System.out.println("To display Bank details");
+	}
+			class Account
+			{
+				public void m1()
+				{
+					System.out.println("Inside inner class m1() method");
+				}
+			}
+}
+
+Accessing Inner class code from instance area of outer class:
+-------------------------------------------------------------
+
+public class Bank 
+{
+	public static void main(String[] args) 
+	{
+		Bank b = new Bank();
+		b.bm1();
+	}
+	
+	public void bm1()
+	{
+		Account acc = new Account();
+		acc.m1();
+		acc.m2();
+	}
+	
+		
+
+	class Account 
+	{
+		public void m1() 
+		{
+			System.out.println("Inside inner class m1() method");
+		}
+		
+		public void m2()
+		{
+			System.out.println("Inside inner class m2() method");
+		}
+	}
+}
+
+Accessing Inner class code from outside of the outer class:
+-------------------------------------------------------------
+
+public class Bank 
+{
+
+	class Account 
+	{
+		public void m1() 
+		{
+			System.out.println("Inside inner class m1() method");
+		}
+		
+		public void m2()
+		{
+			System.out.println("Inside inner class m2() method");
+		}
+	}
+}
+
+public class InnerTest {
+
+	public static void main(String[] args) 
+	{
+		Bank b = new Bank();
+		Bank.Account acc = b.new Account();
+		Bank.Account acc1 = new Bank().new Account();
+		
+		acc.m1();
+		acc1.m2();
+	}
+}
+o/p:
+Inside inner class m1() method
+Inside inner class m2() method
+
+According to inner class code:
+---------------------------------
+If inner class code is accessed from static area of outer class or from outside the outer class, following code is applicable:
+
+Outer out = new Outer();
+Outer.Inner in = out.new Inner();
+in.m1();
+in.m2();
+
+If inner class code is accessed from instance area of outer class then the following code is applicable:
+
+Outer out = new Outer();
+
+Inner in = new Inner();
+in.m1();
+in.m2();
+
+Inner class can access any member of the outer class irrespective of whether they are static or non-static.
+------------------------------------------------------------------------------------------------------------
+
+public class Bank 
+{
+	int i = 10;
+	int j = 20;
+	
+	public static void main(String[] args)
+	{
+		new Bank().m1();
+		new Bank().new Account().m2();
+	}
+	
+	public void m1()
+	{
+		int a = i++;
+		int b = --j;
+		
+		System.out.println("Value of a is: " + a);
+		System.out.println("Value of b is: " + b);
+		
+	}
+		
+
+	class Account 
+	{
+		int x = i;
+		int y = j;
+		
+		public void m2()
+		{
+			System.out.println("Value of x is: " + x);
+			System.out.println("Value of y is: " + y);
+		}
+		
+		
+	}
+}
+o/p: 
+Value of a is: 10
+Value of b is: 19
+Value of x is: 10
+Value of y is: 20
+
+this keyword:
+---------------
+
+Within the inner class, "this" always points to the current inner class object.
+To point to the outer class object from inner class we should use outerclassname.this.
+
+public class Bank 
+{
+	int i = 10;
+	int j = 20;
+	
+	public static void main(String[] args)
+	{
+		new Bank().new Account().m2();
+	}
+
+
+	class Account 
+	{
+		int x = i + 2;
+		int y = j - 5;
+		
+		public void m2()
+		{
+			System.out.println("Value of x is: " + this.x);
+			System.out.println("Value of y is: " + this.y);
+			
+			System.out.println("Value of a is: " + Bank.this.i);
+			System.out.println("Value of b is: " + Bank.this.j);
+		}
+	}
+}
+o/p:
+Value of x is: 12
+Value of y is: 15
+Value of a is: 10
+Value of b is: 20
+
+
+Modifiers applicable for outer class and inner class:
+------------------------------------------------------
+
+The modifiers applicable for outer class are public, default, final, abstract, strictfp
+The modifiers applicable for inner class are public, default, final, abstract, strictfp + private, protected and static.
+
+outer class is  = public, default, final, abstract, strictfp
+inner class is  = outer class + private, protected, static
+
+
+
+Static Nested Class in Java
+-----------------------------
+We can declare an Inner class using static modifer too.  Such Inner class are called as Static Nested class.
+
+If inner class is not static it is called as Inner class
+If inner class is static it is called as Nested class.
+
+* Inner class objects are always associated with outer class objects.  That is, without outer class object, inner class object does not exist.
+* Static Nested class object is not associated with Outer class object.
+Eg:
+public class OuterClass 
+{
+	public static void main(String[] args) 
+	{
+		NestedClass nc = new NestedClass(); //or OuterClass.NestedClass nc = new OuterClass.NestedClass();
+		nc.m1();
+	}
+	
+	static class NestedClass
+	{
+		int i = 10;
+		int j = 20;
+		
+		public void m1()
+		{
+			int x = i+30;
+			int y = j+40;
+			
+			System.out.println("Value of x is: "+ x);
+			System.out.println("Value of y is: "+ y);
+		}
+	}
+}
+o/p:
+Value of x is: 40
+Value of y is: 60
+
+* Within the static Nested Class, we can define static members including the main() method. Hence it is possible to invoke the static nested classes directly
+from the command prompt.
+
+public class OuterClass 
+{
+	public static void main(String[] args) 
+	{
+		System.out.println("Inside outer class main method");
+	}
+	
+	static class NestedClass
+	{
+		int i = 10;
+		int j = 20;
+		
+		public static void main(String[] args) 
+		{
+			System.out.println("Inside Nested class main method");
+			NestedClass nc = new NestedClass();
+			nc.m1();
+		}
+		
+		public void m1()
+		{
+			int x = i+30;
+			int y = j+40;
+			
+			System.out.println("Value of x is: "+ x);
+			System.out.println("Value of y is: "+ y);
+		}
+	}
+}
+o/p:
+java NestedClass :
+Inside Nested class main method
+Value of x is: 40
+Value of y is: 60
+
+* From Inner class, we can access both static and non-static member of the outer class directly.
+* From Nested class,  we can only access static members of the outer class directly.
+
+public class OuterClass 
+{
+	public String s = "Hello";
+	static public String g = "Java";
+	
+	public static void main(String[] args) 
+	{
+		System.out.println("Inside outer class main method");
+	}
+	
+	static class NestedClass
+	{
+		int i = 10;
+		int j = 20;
+		
+		public static void main(String[] args) 
+		{
+			System.out.println("Inside Nested class main method");
+			NestedClass nc = new NestedClass();
+			nc.m1();
+		}
+		
+		public void m1()
+		{
+			int x = i+30;
+			int y = j+40;
+			
+			System.out.println("Outer class non static String value : " + s); #will throw CE error. Cannot make a static reference to the non-static field s.
+			System.out.println("Outer class static String value : " + g);
+			
+			
+			System.out.println("Value of x is: "+ x);
+			System.out.println("Value of y is: "+ y);
+		}
+	}
+}
+
+
+Difference between Inner class and Static Nested class:
+
+				Inner Class															Static Nested Class
+1. Inner class object is always associated with outer class object.			1. Static Nested class object is not associated with outer class object. i.e without
+i.e, without existing outerclass object  there is no chance of 				   existing outer class object, there may be a chance of existing static Nested class
+existing inner class object.												   object.
+
+2. Inside normal inner class we cannot declare static members.				2.  Inside static Nested class we can declare static members.
+
+3. Inside normal inner classes we cannot declare main() and hence			3.  Inside static nested classes we can declare main() and hence we can invoke static
+we cannot invoke inner classes from command prompt.								nested class directly from command prompt.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

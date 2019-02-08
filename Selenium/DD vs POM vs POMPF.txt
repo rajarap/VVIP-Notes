@@ -1,0 +1,227 @@
+Q. What is a Test Automation  Framework?
+A.
+A “Test Automation Framework” is scaffolding that is laid to provide an execution environment for the automation test scripts. 
+The framework provides the user with various benefits that help them to develop, execute and report the automation test scripts efficiently. 
+It is more like a system that has created specifically to automate our tests.
+
+In a very simple language, we can say that a framework is a constructive blend of various guidelines, coding standards, concepts, processes, practices, 
+project hierarchies, modularity, reporting mechanism, test data injections etc. to pillar automation testing. Thus, the user can follow these guidelines 
+while automating application to take advantages of various productive results.
+
+The advantages can be in different forms like the ease of scripting, scalability, modularity, understandability, process definition, re-usability, cost, 
+maintenance etc. Thus, to be able to grab these benefits, developers are advised to use one or more of the Test Automation Framework.
+
+Moreover, the need of a single and standard Test Automation Framework arises when you have a bunch of developers working on the different modules of 
+the same application and when we want to avoid situations where each of the developers implements his/her approach towards automation.
+
+Note: Take a note that a testing framework is always application independent that is it can be used with any application irrespective of the 
+complications (like Technology stack, architecture etc.) of the application under test. The framework should be scalable and maintainable.
+
+=================================================================================================================================================================
+
+Q. What are the advantages of using a Test Automation  Framework?
+A.
+Advantage of Test Automation framework
+
+Reusability of code
+Maximum coverage
+Recovery scenario
+Low-cost maintenance
+Minimal manual intervention
+Easy Reporting
+
+=================================================================================================================================================================
+
+Q. Explain the different types of Test Automation  Framework?
+A.  
+The few most popularly used Test Automation Frameworks are:
+
+Module Based Testing Framework
+Library Architecture Testing Framework
+Data Driven Testing Framework
+Keyword Driven Testing Framework
+Hybrid Testing Framework
+Behavior Driven Development Framework
+
+
+Note:  https://www.softwaretestinghelp.com/test-automation-frameworks-selenium-tutorial-20/
+
+=================================================================================================================================================================
+
+Q. What is the difference between Datadriver framework, POM framework and POM with PageFactories?
+A.
+Note: https://www.quora.com/What-is-the-difference-between-Page-Object-Model-POM-Page-Factory-in-Selenium
+
+
+Datadriver framework:
+---------------------
+
+
+POM Design Pattern:
+-------------------
+
+1. Page  Object Model - meaning, For every ‘page’ in the application, we create a Page Object to reference the ‘page’.
+2. Page object model (POM) can be used in any kind of framework such as modular, data-driven, keyword driven, hybrid framework etc. 
+3. A page object is an object-oriented class that serves as an interface to a page of your Application Under Test(AUT). 
+4. The tests then use the methods of this page object class whenever they need to interact with the User Interface (UI) of that page. 
+5. The benefit is that if the UI changes for the page, the tests themselves don’t need to change, only the code within the page object needs to change. 
+   Subsequently, all changes to support that new UI is located in one place.
+
+Advantages of POM:
+1. Code reusability – We could achieve code reusability by writing the code once and use it in different tests.
+2. Code maintainability – There is a clean separation between test code and page specific code such as locators and layout which becomes very easy to maintain code. 
+   Code changes only on Page Object Classes when a UI change occurs. It enhances test maintenance and reduces code duplication.
+3. Object Repository – Each page will be defined as a java class. All the fields in the page will be defined in an interface as members. 
+   The class will then implement the interface.
+4. Readability – Improves readability due to clean separation between test code and page specific code
+
+Note: https://medium.com/tech-tajawal/page-object-model-pom-design-pattern-f9588630800b
+
+POM framework with PageFactories:
+---------------------------------
+
+1. Page Object is a class that represents a web page and holds the functionality and members.
+2. Page Factory is a way to initialize the web elements you want to interact with within the page object when you create an instance of it.
+
+
+NoteL https://www.toptal.com/selenium/test-automation-in-selenium-using-page-object-model-and-page-factory
+
+=================================================================================================================================================================
+
+Q. What is the difference between @FindBy, @FindBys and @FindAll?
+A.
+
+@FindBy - The @FindBy annotation is used in Page Objects in Selenium tests to specify the object location strategy for a WebElement or a list of WebElements. 
+Using the PageFactory, these WebElements are usually initialized when a Page Object is created.
+
+@FindBy
+The @FindBy annotation is used to locate one or more WebElements using a single criterion. For example, to identify all elements that have the same class 
+attribute, we could use the following identification:
+
+@FindBy(how = How.CLASS_NAME, using = "classname")
+private List<WebElement> singlecriterion;
+If we are sure there is only a single element that is identified by our location strategy, for example when we use the element ID, we can also directly 
+assign the result to a WebElement variable:
+
+@FindBy(how = How.ID, using = "elementid")
+private WebElement element;
+To instantiate the elements, we call the initElements method of the PageFactory class:
+
+PageFactory.initElements(driver, this);
+
+
+
+In some cases we want (or need) to use more than a single criterion to identify one or more objects, for instance when page elements do not have a unique ID.
+In this case, there are two possible annotations that can be used:
+
+The @FindBys annotation is used in case elements need to match all of the given criteria
+The @FindAll annotation is used in case elements need to match at least one of the given criteria
+
+Using @FindBys:
+===============
+@FindBys({
+    @FindBy(how = How.NAME, using = "username"),
+    @FindBy(how = How.NAME, using = "password")
+})
+private List<WebElement> bothcriteria;
+
+The bothcriteria list should contain 0 elements, as there is no element that has both a name attribute with the value username and a name 
+attribute with the value password.
+
+Using @FindAll:
+===============
+@FindAll({
+    @FindBy(how = How.NAME, using = "username"),
+    @FindBy(how = How.NAME, using = "password")
+})
+private List<WebElement> eithercriterion;
+The eithercriterion list should contain 2 elements, as there is one element that has a name attribute with the value username and also one 
+that has a name attribute with the value password.
+
+
+A more verbose FindBy
+Finally, if you have a lot of elements within your Page Object, you can also use a more verbose way of specifying your @FindBy strategy. For example
+
+@FindBy(className = "classname")
+gives the exact same results as
+
+@FindBy(how = How.CLASS_NAME, using = "classname")
+
+=================================================================================================================================================================
+
+Q. How does page object model solves StaleElementReferenceException?
+A.
+You will see programs run fine when we use page object design pattern. You will never get Stale Element Reference Exception. 
+When we use FindBy annotation in POM, webdriver locates element and update reference every time before performing any action on that. 
+You can use web element without relocating any where. This is major advantage of using Page Object Model. 
+
+Note:  http://makeseleniumeasy.com/2017/06/09/1824/
+
+=================================================================================================================================================================
+
+Q. What is stale element and how to fix it?
+A.
+https://corevalue.net/what-is-a-stale-element-and-how-to-fix-it/
+
+=================================================================================================================================================================
+
+Q. What are the different types of exceptions thrown by Selenium WebDriver?
+A.
+http://www.naveenautomationlabs.com/2017/12/exceptions-that-may-happen-in-all.html
+
+=================================================================================================================================================================
+
+Q. What are the challenges you faced when working with Selenium WebDriver?
+A.
+http://www.naveenautomationlabs.com/2019/01/what-are-challenges-you-faced-in.html
+
+=================================================================================================================================================================
+
+Q. What is the difference between Adapter class and listeners in Selenium?
+A.
+
+Adapter is an abstract class, listener are interfaces.
+ 
+In an adapter class, there is no need for implementation of all the methods presented in an interface. 
+It is used when only some methods of defined by its interface have to be overridden.
+
+In a listener, all the methods that have been declared in its interface have to be implemented. This is because these methods are final.
+
+=================================================================================================================================================================
+
+Q. How to re-run failed tests in Selenium WebDriver?
+A. 
+
+=================================================================================================================================================================
+
+Q. How to configure tests with selenium grid?
+A. 
+There are some differences with selenium grid2 and selenium grid3.
+Note: https://www.seleniumeasy.com/selenium-tutorials/configure-selenium-grid-using-json-config-file
+
+
+=================================================================================================================================================================
+
+Q. What are the default reports generated by TESTNG?
+A. 
+By default, TESTNG generates two html reports.  These reports will be can be found under the test-output folder.
+
+1. index.html
+2. emailable-report.html
+
+In addition, TESTNG also supports ReportNG reports which are better than the default reports of TESTNG.  To generate ReportNG reports, 
+
+1. Download the ReportNG and google guice jars from maven repo. 
+2. In the testng.xml file, add the following listener.  
+
+ <listeners>
+  	<listener class-name="org.uncommons.reportng.HTMLReporter"/>
+ </listeners>
+
+3. Execute your testng tests.  
+4. Refresh your project workspace.
+5. Under test-output/html folder, the reportng report will be generated with the name "index.html". 
+6. Open the index.html in your web browser to view the ReportNG report.
+
+=================================================================================================================================================================
+

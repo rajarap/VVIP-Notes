@@ -1,0 +1,141 @@
+Static in Java:
+------------------
+Process:  When ever we try to execute a java class, first the .class is loaded into the memory,  and the follwoing actions will be performed automatically.
+
+1. identification of all static members of the class from top to bottom.
+2. Execution of all static variable assignments and static blocks from top to bottom.
+3. Execution of main method.
+
+Read indirectly write only state: (RIWOS)
+-----------------------------------------
+If a static variable is in RIWOS state, then we cannot perform any read operation directly, otherwise we will get CE:Illegal forward reference.
+
+In short, when you try to reference a static variable even before it is declared and initialized we will get CE: Such variables are called RIWOS. 
+
+static variable x is defined before referencing it in the static block.
+------------------------------------------------------------------------
+public class StaticVariables 
+{
+	static int x = 10;
+	
+	static 
+	{
+		System.out.println(x);
+		//System.exit(0);
+	}
+
+	public static void main(String[] str)
+	{
+		System.out.println("Inside main method");
+	}
+}
+
+Trying to print the static variable x, even before defining it.
+-----------------------------------------------------------------
+public class StaticVariables 
+{
+	static 
+	{
+		System.out.println(x);					//here x becomes RIWOS.
+		//System.exit(0);
+	}
+	
+	static int x = 10;
+
+	public static void main(String[] str)
+	{
+		System.out.println("Inside main method");
+	}
+}
+
+
+
+Static Block:
+---------------
+
+1. At the time of class loading, if we want to perfrom any activity, we have to define that activity inside the static block. Eg. to initialize static variables etc.
+2. A class can contain any number of static blocks. these static blocks will be executed from top to bottom.
+
+Static control flow in parent - child classes:
+-----------------------------------------------
+public class Parent 
+{
+	static int x = 10;
+	
+	static 
+	{
+		m1();
+		System.out.println("Parent Static block");
+	}
+	
+	public static void main(String... a)
+	{
+		m1();
+		System.out.println("Parent Main method");
+	}
+	
+	public static void m1()
+	{
+		System.out.println(y);
+	}
+	
+	static int y = 20;
+}
+
+class Child extends Parent
+{
+static int i = 100;
+	
+	static 
+	{
+		m2();
+		System.out.println("Child Static block");
+	}
+	
+	public static void main(String... a)
+	{
+		m2();
+		System.out.println("Child Main method");
+	}
+	
+	public static void m2()
+	{
+		System.out.println(j);
+	}
+	
+	static
+	{
+		System.out.println("Child Second Static block");
+	}
+	
+	static int j = 200;
+}
+
+o/p: 
+>java Parent
+
+0
+Parent Static block
+20
+Parent Main method
+
+===================
+
+>java Child
+0
+Parent Static block
+0
+Child Static block
+Child Second Static block
+200
+Child Main method
+
+Process:
+----------
+1. Whenever child class is loaded, automatically parent class also will be loaded to make parent class members available to child class. 
+2. Whenever parent class is loaded, child class will not be loaded.
+3. Whenever we execute child class the following process flow will be followed:
+	a. Identification of static members from parent to child.
+	b. Execution of static assigments and static blocks from parent to child.
+	c. Execution of only child class main method. If child class does not have main method defined, then only parent class main method will be executed.
+	

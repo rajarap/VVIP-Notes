@@ -1,0 +1,201 @@
+Collection Framework:
+------------------------
+
+* An array is a indexed group of fixed number of homogeneous data elements.  Arrays can store primitive type data elements or objects. 
+* Drawbacks of arrays
+	- They are fixed in size. We cannot increase or decrease the size of an array.
+	- Can hold only homogeneous data elements.  Data elements of same type.
+	- Arrays are not built on any data structure. There is no readymade method support available.
+	- Memory wise arrays are not recommended to use.
+	
+
+
+To overcome the drawbacks of arrays, Collection Framework was developed.
+
+* A collection is a group of individual objects represented as a single entity. 
+* Collection can increase or decrease in size as per our requirement.
+* Collection can hold both homogeneous and heterogeneous objects, but not primitive type elements.
+* Every collection class is implemented based on some data structure. Hence readymade method support is available.
+* Memory utilization  is very good in collection.
+* Performance wise, collection not recommended to use. 
+
+Q. What is the difference between array and arraylist?
+
+
+Q. What is the underlyning datastructured used for LinkedList?
+Q. What are cursors in java? Explain the different type of cursors in detail?
+Q. What is the differences and limitation of the type of cursors in Java?
+Q. Tell me about Comparable interface in Java? Why is it used?
+Q. Explain the difference between Comparable and Comparator interface?
+
+Q. What is generics and where is it applicable in Java?
+Q. 
+
+
+=================================================================================================================================================================
+
+Q. Difference between Arraylist and Vector class in Collection?
+
+			Arraylist																Vector
+				
+1. ArrayList is non-synchronized.									1. Vector is synchronized.
+2. Multiple threads can access an Arraylist simentaneoulsy.			2. At an point only one thread can access a Vector.
+3. Not thread safe.													3. Vector object is thread safe.
+4. High performance as no thread wait time.							4. Low on performance as only one thread can access at a time.
+5. Introduced in 1.2v												5. Introduced in 1.0v. Legacy class.	
+
+The only common factor between Arraylist and Vector is that they both implement the RandomAccess interface.  All collection classes implement Serializable,
+and clonable interfaces by default.		
+
+=================================================================================================================================================================
+
+Q. How to get the synchronized version of an Arraylist?
+A. 
+The Collections class, contains a utility method called SynchronizedList().  Through this method we can get the synchronized version of the Arraylist.
+
+		public static List synchronizedList(List l)
+
+Eg:  
+ArrayList al = new ArrayList();
+List l = Collections.synchronizedList(al);
+
+al - non-synchronized list.
+l - synchronized list.
+
+Similarly we can get the synchronized version of Set and Map using the below methods respectively:
+
+		public static Set synchronizedSet(Set s);
+		public static Map synchronizedMap(Map m);
+
+=================================================================================================================================================================
+
+Q. How to retrieve objects from a collection  object?
+A.
+To retrieve objects from collections one by one, we have to use cursors.  There are 3 types of cursors:
+
+1. Enumeration
+2. Iterator
+3. ListIterator
+
+Enumeration:  
+---------------
+* This is a cursor to retrieve objects one by one from a collection.  
+* This cursor is applicable only for legacy classes  like Vector, Stack, HashTable etc.
+* Enumeration can be created using the elements() method.
+
+Syntax:  
+public Enumeration elements();
+public boolean hasMoreElements();
+public Object nextElement();
+
+Eg:  
+Vector v = new Vector();
+Enumeration e = v.elements();
+
+Limitations of Enumeration:
+
+1. Used only for legacy classes.  Hence not a universal cursor.
+2. Using Enumeration, we will  get only read-only access.  We cannot perform remove operations.
+
+To overcome these limitations, Iterator was introduced.
+
+Iterator:
+---------------
+* This cursor can be used for all collection classes to retrieve objects one by one.
+* While retrieving, we can also perform remove operation in addition to read operation.
+* We can get the iterator object using the iterator() method of collection interface.
+
+Syntax: 
+ArrayList al = new ArrayList();
+Iteration it = al.iterator();
+
+Iterator interface contains the following 3 methods:
+
+1. public boolean hasNext();
+2. public Object next();
+3. public void remove();
+
+=================================================================================================================================================================
+
+Q. Explain about Comparable interface in Java?
+A. 
+Comparable in java means, compared to some object what is the position on my object.  Does it come before that object, or after that object or is it a
+duplicate of that object.   
+
+Comparable is a interface in Java, which contains only one method:  
+
+Syntax:     public int compareTo(object obj);   This method returns an integer.
+
+Eg:
+
+obj1.compareTo(obj2);  ==> this method will return the following integer value.
+
+returns a -ve value if obj1 comes before obj2.
+returns a +ve value if obj1 comes after obj2.
+returns a 0 value if obj1 is equal to obj2.(duplicate value).
+
+Eg:
+public class Compare 
+{
+
+	public static void main(String[] args) 
+	{
+		System.out.println("A.compareTo(B): " + ("A".compareTo("B")));
+		System.out.println("M.compareTo(D): " + ("M".compareTo("D")));
+		System.out.println("M.compareTo(D): " + ("Z".compareTo("A")));
+		System.out.println("Q.compareTo(Q): " + ("Q".compareTo("Q")));
+		
+		Integer a = 10;
+		Integer b = 3;
+		System.out.println("a.compareTo(b): " + (a.compareTo(b)));
+	}
+}
+o/p:
+A.compareTo(B): -1
+M.compareTo(D): 9
+M.compareTo(D): 25
+Q.compareTo(Q): 0
+a.compareTo(b): 1
+
+* When we are depending on default natural sorting order internally JVM calls the compareTo() method.
+* Based on the return type, JVM identifies the location of the element in sorting area.
+
+=================================================================================================================================================================
+Q. Explain about Comparator interface in Java?
+A.
+If we are not satisfied with the default natural sorting order or if the default natural sorting order is not already available, then we can define our
+own customized sorting by using comparator.
+
+	- Comparable is meant for default natural sorting oder.
+	- Comparator is meant for customized sorting order.
+
+Comparator is an interface in Java which contains two methods:
+	
+		compare();
+		equals();
+		
+Syntax:
+
+ public int compare(Object obj1, Object obj2);
+ public boolean equals(Object obj1);
+
+
+=================================================================================================================================================================
+
+Q. What is the difference between Comparable and Comparator?
+A. 
+			Comparable																Comparator
+				
+1. to define default natural sorting order.							1. to define a customized sorting order.
+2. defines only one method compareTo().								2. defines two methods.  compare(), equals().
+3. All wrapper and String classes implement Comparable.				3. No pre-defined class implements Comparator interface.
+4. present in java.lang package										4. present in java.util package.	
+
+
+=================================================================================================================================================================
+
+
+
+
+
+

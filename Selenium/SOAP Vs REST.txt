@@ -1,0 +1,293 @@
+Q. What is api testing?
+A.
+https://smartbear.com/learn/api-testing/what-is-api-testing/
+https://assertible.com/blog/web-service-performance-testing-tips-and-tools-for-getting-started
+
+===============================================================================================================================================================
+
+Q. How to create a API test plan document?
+A.
+https://www.infotech.com/research/ss/develop-apis-that-work-properly-for-the-organization/web-api-test-plan-template
+https://www.ite.org/pub/?id=e26943fa-2354-d714-512a-8c89e4c8bf12
+
+===============================================================================================================================================================
+Q. Resource where you can find all the details about HTTP:  https://tools.ietf.org/html/rfc2616
+
+===============================================================================================================================================================
+
+Q. What is difference between SOAP and REST webservices?
+A.
+
+			SOAP												REST
+-------------------------------------------------------------------------------------------------------------
+
+1. SOAP is a protocol									1. REST is a architectural design
+2. SOAP uses only XML data format.						2. REST uses different formats like plain text, HTML, JSON and XML.
+3. SOAP cannot use REST as it is a protocol.			3. REST can use SOAP webservices with any protocol like HTTP, SOAP.
+4. SOAP uses JAX-WS security api for security services.	4. REST uses JAX-RS is the security api for security services.
+5. SOAP requires more bandwidth and resources.			5. REST uses less bandwidth and resources compared to SOAP.
+6. SOAP defines standards to be followed strictly.		6. REST does not define too much standard like SOAP.
+7. SOAP defines its own security.						7. REST inherits security measures from the underlying transport.
+8. SOAP uses services interface to expose BL.			8. REST uses URI to expose Business Logic.
+9. SOAP is less preferred than REST as it heavy.		9. REST is lightweight webservices, and hence preferred more than SOAP.
+10. Simple Object Access Protocol						10. Representational State Transfer
+
+==============================================================================================================================================================
+
+Q. What is Serialization and DeSerialization in Java?
+A.
+
+Serialization - is a mechanism of converting the state of an object into a byte stream. Writing the state of an object to a file.
+Deserialization  - is the reverse process where the byte stream is used to recreate the actual Java object in memory. 
+
+* This mechanism is used to persist the object.
+* The byte stream created is platform independent. So, the object serialized on one platform can be deserialized on a different platform.
+* Only the objects of those classes can be serialized which are implementing java.io.Serializable interface.
+
+1. If a parent class has implemented Serializable interface then child class doesn’t need to implement it but vice-versa is not true.
+2. Only non-static data members are saved via Serialization process.
+3. Static data members and transient data members are not saved via Serialization process.
+	So, if you don’t want to save value of a non-static data member then make it transient.
+4. Constructor of object is never called when an object is deserialized.
+5. Associated objects must be implementing Serializable interface.
+
+
+===================================================================================================================================================================
+
+Q. What is difference between Serialization/DeSerialization and Marshalling/UnMarshalling?
+A.
+
+Serialization: Converting java objects to byte streams.
+DeSerialization: Converting byte streams back to java objects.
+
+Marshalling: Converting java objects (using POJO) to XML/JSON using JAXB api.  (POJO - Plain Old Java Object.
+UnMarshalling: Converting XML/JSON file back to java object (POJO) using JAXB api.
+
+===================================================================================================================================================================
+
+Q. What tools are used to convert JSON or XML files to customized java objects?
+A. 
+To convert JSON to java objects we can use:
+		* GSON       -  for HttpClient framework
+		* Simple JSON
+		* JSON Soup
+		* JSONPath   - for RestAssured framework
+		* JSONObject
+		
+To convert XML to java objects we can use:
+		* Jackson Dataformat XML
+
+
+If you use Apache's HTTPClient framework for api testing, use GSON and google guice to convert the response json to java object.
+If you use Rest Assured framework for api testing, use JSONPath to conver the response json  to java object.
+
+===================================================================================================================================================================
+
+Q. Write code to convert JSON or XML files to customized java objects?
+A. 
+
+To convert JSON to java objects using Gson:
+-------------------------------------------
+gsonBuilder = new GsonBuilder();
+gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
+mapper = gson.fromJson(respBody, TC_01_GetListOfUsers_Mapper1.class);
+
+To convert XML to java objects using Jackson Dataformat XML:
+------------------------------------------------------------
+XmlMapper xml = new XmlMapper();
+xml.configure(DeSerializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+Response body = xml.readValue(response.getResponsebody(), ResponseBody.class);
+
+===================================================================================================================================================================
+
+Q. What are the difference between URL, URI, URN and endpoint?
+A. 
+
+URI:
+--------------------------------------------------------------------------------------------------------------------------------------------------
+A URI (Uniform Resource Identifier) is a label that can be used to name or to locate a resource on the The Internet. 
+[1] An analogy in the real world could be a person's contact information. This information includes a person's name, as well as different forms 
+to get in touch with that person: their phone number(s), street address, e-mail, etc.
+
+URL:
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Following that analogy, a URL (Uniform Resource Locator) is one of those ways to get in touch with that person. 
+The URL also specifies which way (a scheme or protocol) to communicate when contacting that person. Examples of schemes are 
+http, ftp, file, mailto. Following that definition, a URL is a class of URI, which is in line with what Jeff Hammerbacher says in his answer.
+
+URN:
+--------------------------------------------------------------------------------------------------------------------------------------------------
+As mentioned above, the name is also a part of someone's contact information. Its URI counterpart is aptly called URN (Uniform Resource Name), 
+and just like a person's name, it does not include information about how to contact that resource, only its name. URNs define namespaces, 
+which in my analogy are like aliases. A person may have different names in different contexts, so the URN specifies the context with a namespace identifier. 
+Examples of these identifiers are isbn, isan, mpeg. 
+
+EndPoint URL:
+--------------------------------------------------------------------------------------------------------------------------------------------------
+In simple terms, a web service endpoint is a web address (URL) at which clients of a specific service can gain access to it. 
+By referencing that URL, clients can get to operations provided by that service
+
+https://www.quora.com/What-is-the-difference-between-a-URL-and-a-URI
+
+One line explanation with example:
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+URI => Uniform Resource Identifier Identifies a complete address of resource i-e location, name or both.
+
+URL => Uniform Resource Locator Identifies location of the resource.
+
+URN => Uniform Resource Name Identifies the name of the resource
+
+Example
+
+We have address https://www.google.com/folder/page.html where,
+
+URI(Uniform Resource Identifier) => https://www.google.com/folder/page.html
+
+URL(Uniform Resource Locator) => https://www.google.com/
+
+URN(Uniform Resource Name) => /folder/page.html
+
+URI => (URL + URN) or URL only or URN only
+
+===================================================================================================================================================================
+
+Q. What are the different Http status codes?
+A. There are various HttpStatus codes based on the client request and response recieved from the server.  They are as follows:
+
+1xx series - for information and communication purpose
+2xx series - for successful transactions between client and server
+3xx series - for re-direction from one location to another
+4xx series - for errors made at the client side.
+5xx series - for errors made at the server side.
+
+1xx series - for information and communication purpose
+------------------------------------------------------
+Denotes that the request from the client was recieved and understood by the server, and the client should await the response
+from the server.
+EG:
+100 - Continue (server has recieved the request, client to continue to send the other details etc)
+101 - switching protocols
+102 - processing the request
+
+2xx series - for successful transactions between client and server
+------------------------------------------------------------------
+Denotes that the action requested by the client was received, understood and accepted..
+EG:
+200 - OK (client request is processed successfully)
+201 - created (The request has been fulfilled, resulting in the creation of a new resource)
+202 - accepted (The request has been accepted for processing, but the processing has not been completed. 
+				The request might or might not be eventually acted upon).
+203 - Non authoritative information (The server is a transforming proxy (e.g. a Web accelerator) that received a 200 OK from its origin, 
+									 but is returning a modified version of the origin's response0.
+204 - No content (The server successfully processed the request and is not returning any content).
+
+
+3xx series - for re-direction from one location to another)
+------------------------------------------------------------
+
+300 - Multiple choices (Indicates multiple options for the resource from which the client may choose)
+	  Eg: this code could be used to present multiple video format options, to list files with different filename extensions).
+301 - Moved Permanentely (This and all future requests should be directed to the given URI.)
+302 - Found (Previously "Moved temporarily")
+
+
+4xx series - for errors made at the client side
+-----------------------------------------------
+Is intended for situations in which the error seems to have been caused by the client.
+
+400 - Bad Request  (The server cannot or will not process the request due to an apparent client error 
+				 (e.g., malformed request syntax, size too large, invalid request message framing, or deceptive request routing)
+401 - Unauthorized (when authentication is required and has failed or has not yet been provided)
+402 - Payment Required 
+403 - Forbidden (The request was valid, but the server is refusing action. The user might not have the necessary permissions 
+				 for a resource, or may need an account of some sort).
+404 - Not Found (The requested resource could not be found but may be available in the future. 
+                 Subsequent requests by the client are permissible).
+			
+
+5xx series - for errors made at the server side
+------------------------------------------------
+The server failed to fulfil a request
+Eg:
+500 - Internal Server Error  (A generic error message, given when an unexpected condition was encountered and no more 
+							   specific message is suitable).
+501 - Not Implemented (The server either does not recognize the request method, or it lacks the ability to fulfil the request). 
+502 - Bad Gateway (The server was acting as a gateway or proxy and received an invalid response from the upstream server).
+503 - Service Unavailable (The server is currently unavailable (because it is overloaded or down for maintenance).
+504  - Gateway Timeout (The server was acting as a gateway or proxy and did not receive a timely response from the 
+                        upstream server).
+
+=================================================================================================================================						
+Q. What are the contents of a HTTP Request?
+A. 
+https://www.toolsqa.com/client-server/http-request/
+
+==================================================================================================================================
+						
+Q. What are the contents of a HTTP Response?
+A. 
+https://www.toolsqa.com/client-server/http-response/
+
+==================================================================================================================================
+
+Q. In how many ways can you implement authorization in api/webservices testing?
+A. 
+There are two ways to implement authorization in api/webservices testing:
+
+1. using Base64Encoding
+2. using HttpClientContext
+
+The user has to supply the username and password for authorization.
+
+1. Using Base64Encoding:
+-------------------------
+Base64Encoding encrypts the user credentials and attaches it as a header along with the request.
+
+Code:
+------
+Map<String, String> headers = new HashMap<String, String>();
+headers.put("Accept", "application/json");
+//headers.put("Authorization", "Basic YMRtalW4562CsY29zQ==");
+headers.put("Authorization", Base64.encodeBase64String("admin:welcome".getBytes()));
+RestResponse response = performGetRequest(url, headers);
+
+
+
+2. Using HttpClientContext:
+---------------------------
+Using the HttpClientContext class, the user can provide the required credentials to access the resources on the server.
+HttpClientContext object is not attached with the request as header.  It is passed as an argument to the 'execute' method
+along with the HttpRequest.
+
+Code:
+-----
+
+CredentialsProvider provider = new BasicCredentialsProvider();
+provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("admin", "admin"));
+
+HttpClientContext context = HttpClientContext.create();
+context.setCredentialsProvider(provider);
+
+HttpGet httpGet = new HttpGet(url);
+CloseableHttpClient client = new HttpClientBuilder().create().build();
+CloseableHttpResponse response = client.execute(httpGet, context);
+ 
+==================================================================================================================================
+
+Q. Explain the architecture of api/webservices testing?
+A. 
+Webservices or APi testing projects can have the followingn folder layouts:
+
+>>src/main/java
+	>com.http.WebAPI
+	
+>>src/test/java
+	>com.http.TestBase
+	>com.http.TestNgTests
+	>com.htpp.Utilities
+	>com.http.Configuration
+	>com.http.Mappers
+	>com.http.EventListener
+
+==================================================================================================================================
